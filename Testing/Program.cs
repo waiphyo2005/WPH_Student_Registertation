@@ -12,6 +12,8 @@ namespace Testing
 {
     internal class Program
     {
+        //Global Variables
+        //jagged array to store subjects by grades.
         string[][] gradeSubjects = new string[][]
         {
             new string[] { "Myanmar", "English", "Maths" },
@@ -26,7 +28,7 @@ namespace Testing
             new string[] { "Myanmar", "English", "Maths", "Physics", "Chemistry", "Biology" },
             new string[] { "Myanmar", "English", "Maths", "Physics", "Chemistry", "Biology" },
         };
-
+        //2D list to store all the student details of each grade.
         List<List<object>> g1Details = new List<List<object>>();
         List<List<object>> g2Details = new List<List<object>>();
         List<List<object>> g3Details = new List<List<object>>();
@@ -44,25 +46,27 @@ namespace Testing
             Console.WriteLine("|| Welcome to Student Registration System ||");
             Console.WriteLine("============================================");
             Console.WriteLine();
-
+            //cannot call void method from static void method.
+            //Because its an intance method.
+            //Therefore creating an instance of the class to call the void method.
             Program student = new Program();
             student.MainMenu();
         }
-
+        //Method for Main Menu.
         void MainMenu()
         {
             int perform;
             Console.WriteLine();
             Console.WriteLine("Please select option that you want to perform: \n1.Register Students\n2.View registered students\n3.Exit");
             perform = Convert.ToInt32(Console.ReadLine());
-
+            //Using while loop to check for invalid input and loop until user insert the correct input.
             while (perform != 1 && perform != 2 && perform != 3)
             {
                 Console.WriteLine("\nInvalid Input!\n");
                 Console.WriteLine("Please select option that you want to perform: \n1.Register Students\n2.View registered students\n3.Exit");
                 perform = Convert.ToInt32(Console.ReadLine());
             }
-
+            //using swtich case that will call the method of the function that the user choose to perform.
             switch (perform)
             {
                 case 1:
@@ -76,7 +80,7 @@ namespace Testing
                     break;
             }
         }
-
+        //Method which allows user to choose which Grade user wants to reigster students for.
         void insertStudent()
         {
             Console.WriteLine();
@@ -87,11 +91,11 @@ namespace Testing
 
             Console.Write("Please insert Student's Grade Number: ");
             int grade = Convert.ToInt32(Console.ReadLine());
-
+            //Using switch case that will call the register method with perimeters according to the grade.
             switch (grade)
             {
                 case 1:
-                    register(grade, g1Details);
+                    register(grade, g1Details); //calling the register method. First perimeter representing the grade and Second perimeter is the global variable to store student details inside.
                     break;
                 case 2:
                     register(grade, g2Details);
@@ -122,34 +126,35 @@ namespace Testing
                     break;
                 default:
                     Console.WriteLine("\nInvalid Input! Please insert a proper Grade (1 to 10)!\n");
-                    insertStudent();
+                    insertStudent(); //if the user input is invalid, it will call back this function
                     break;
             }
         }
-
+        //Method for registering student details. 
+        //Accepts user input for details and store it in the global variable list according to the perimeter.
         void register(int studentGrade, List<List<object>> list)
         {
             Console.WriteLine();
             Console.WriteLine("===============================");
-            Console.WriteLine($" Register students for Grade {studentGrade}");
+            Console.WriteLine($" Register students for Grade {studentGrade}"); //gets the student grade number from the first perimeter.
             Console.WriteLine("===============================");
             Console.WriteLine();
 
             bool another = true;
-            var phrase = @"^[a-zA-Z ]+$";
+            var phrase = @"^[a-zA-Z ]+$"; //phrase order to validate student name.
 
             while (another)
             {
-                double totalmarks = 0;
+                double totalmarks = 0; //initialize as 0 so that totalmarks will reset when user insert another student details.
                 char status;
-                int distinction = 0;
-                List<object> student = new List<object>();
-                List<char> subjStatus = new List<char>();
+                int distinction = 0; //initialize as 0 so that number of dinctinctions will reset when user insert another student details.
+                List<object> student = new List<object>(); //list for storing one student details temporarily before inserting into the global variable list.
+                List<char> subjStatus = new List<char>(); //list for storing student's subject status to decide whether student pass or fail and how many distinctions student got.
 
                 Console.Write("Enter Student's Name: ");
                 string name = Console.ReadLine();
-                bool nameValid = Regex.IsMatch(name, phrase);
-
+                bool nameValid = Regex.IsMatch(name, phrase); //student name validation. Check if the student name matches with the Regex phrase format.
+                //using while loop. Loops until user insert the correct name format.
                 while (!nameValid)
                 {
                     Console.WriteLine("\nInvalid Input! Please insert a proper name!\n");
@@ -158,11 +163,11 @@ namespace Testing
                     nameValid = Regex.IsMatch(name, phrase);
                 }
 
-                student.Add(name);
+                student.Add(name); //If the name is valid, it will add to the student list.
 
                 Console.Write("Enter Student's Age: ");
                 int age = Convert.ToInt32(Console.ReadLine());
-
+                // using while loop. Loops until user insert the valid student age.
                 while (age < 5 || age > 120)
                 {
                     Console.WriteLine("\nInvalid Input! Please insert a proper age!\n");
@@ -170,23 +175,25 @@ namespace Testing
                     age = Convert.ToInt32(Console.ReadLine());
                 }
 
-                student.Add(age);
-                student.Add(studentGrade);
-
+                student.Add(age); //If the age is valid, it will add to student list.
+                student.Add(studentGrade); //Adding student grade from the perimeter into the student list.
+                //using for loop to collect marks of all subjects.
                 for (int i = 0; i < gradeSubjects[studentGrade - 1].Length; i++)
                 {
+                    //printing out subjects.
                     Console.Write($"Please Insert the marks of {gradeSubjects[studentGrade - 1][i]}: ");
+                    //collecting marks for subject.
                     double marks = Convert.ToDouble(Console.ReadLine());
-
+                    //using while loop. Loops until user inser the valid marks (0 to 100).
                     while (marks < 0 || marks > 100)
                     {
                         Console.WriteLine("\nInvalid Input! Please insert proper marks (0 to 100)!\n");
                         Console.Write($"Please Insert the marks of {gradeSubjects[studentGrade - 1][i]}: ");
                         marks = Convert.ToDouble(Console.ReadLine());
                     }
-
+                    //if the marks are valid, it will be added to the student list.
                     student.Add(marks);
-
+                    //checking whether the student pass, fail or got distinction in each subject according to the marks inserted.
                     if (marks < 40)
                     {
                         status = 'F';
@@ -199,18 +206,21 @@ namespace Testing
                     {
                         status = 'P';
                     }
-                    subjStatus.Add(status);
-                    totalmarks += marks;
+                    subjStatus.Add(status); //adding the subject status in the subjStatus list.
+                    totalmarks += marks; //calculating the total marks by adding up the marks inseted for each subject.
                 }
-                student.Add(totalmarks);
+                student.Add(totalmarks); // if marks for all subjects has been inserted and added up, the total marks will be added to the student list.
+                //checking the subjStatus list to see if the student fails any of the subjects.
                 if (subjStatus.Contains('F'))
                 {
-                    student.Add("Fail");
+                    student.Add("Fail"); //if the student fails at least one subject, it will add Fail to the student list.
                 }
                 else
                 {
-                    student.Add("Passed");
+                    student.Add("Pass"); //if student doesn't fail any subject, it will add Pass to the student list.
                 }
+                //checking the subjStatus list to see if student got any distinctions.
+                //if there is distinctions, it will add up the number of distinctions.
                 for (int i = 0;i < subjStatus.Count; i++)
                 {
                     if (subjStatus[i] == 'D')
@@ -218,9 +228,9 @@ namespace Testing
                         distinction++;
                     }
                 }
-                student.Add(distinction);
-                list.Add(student);
-
+                student.Add(distinction); //adding the number of distinctions to student list.
+                list.Add(student); //after adding every details, the student list will be added to the global variable according to the perimeter.
+                //checking if user wants to register another student within the same grade.
                 Console.WriteLine($"\nDo you want to register another student in Grade {studentGrade}?\n1.Yes\n2.No");
                 int rAnother = Convert.ToInt32(Console.ReadLine());
 
