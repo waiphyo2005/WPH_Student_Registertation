@@ -140,6 +140,7 @@ namespace Testing
             
                 while (another)
                 {
+                    double totalmarks = 0;
                     List<object> student = new List<object>();
                     Console.Write("Enter Student's Name: ");
                     string name = Console.ReadLine();
@@ -172,7 +173,9 @@ namespace Testing
                         marks = Convert.ToDouble(Console.ReadLine());
                         }
                         student.Add(marks);
+                        totalmarks += marks;
                     }
+                    student.Add(totalmarks);
                     list.Add(student);
                     Console.WriteLine($"\nDo you want to register another student in Grade {studentGrade}?\n1.Yes\n2.No");
                     int rAnother = Convert.ToInt32(Console.ReadLine());
@@ -242,7 +245,7 @@ namespace Testing
             {
                 Console.Write($"{stusubj[i]}\t\t");
             }
-            Console.WriteLine();
+            Console.WriteLine("Total Marks");
             foreach (var student in stulist)
             {
                 foreach (var detail in student)
