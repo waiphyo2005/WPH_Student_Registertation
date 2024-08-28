@@ -247,16 +247,18 @@ namespace Testing
 
             MainMenu();
         }
-
+        //Method that allow users to choose which grade student details that they want to see. 
         void displayStudents()
         {
             Console.Write("Please insert the Grade that you want to see the students: ");
             int dGrade = Convert.ToInt32(Console.ReadLine());
-
+            //using switch case to call showStudents method with perimeters according to the grade that user inserts.
             switch (dGrade)
             {
                 case 1:
-                    showStudents(1, gradeSubjects[0], g1Details);
+                    //calling showStudents mwthod to display students in grade 1.
+                    //First perimeter is to show grade number, second perimeter is to display subjects in grade 1 and third perimeter is for displaying all students with thier details in grade 1.
+                    showStudents(1, gradeSubjects[0], g1Details); 
                     break;
                 case 2:
                     showStudents(2, gradeSubjects[1], g2Details);
@@ -286,11 +288,12 @@ namespace Testing
                     showStudents(10, gradeSubjects[9], g10Details);
                     break;
                 default:
-                    displayStudents();
+                    displayStudents(); //if the user input is invalid, it will call back this function.
                     break;
             }
         }
-
+        //Method to display all students with their details in thier respective grades. 
+        //First perimeter is to show grade number, second perimeter is to display subjects and third perimeter is for displaying all students with their details.
         void showStudents(int g, string[] stusubj, List<List<object>> stulist)
         {
             Console.WriteLine();
@@ -300,14 +303,14 @@ namespace Testing
             Console.WriteLine();
 
             Console.Write(string.Format("{0,-20}{1,-20}{2,-20}","Name", "Age", "Grade"));
-
+            //using for loop to display subjects from global variable array.
             for (int i = 0; i < stusubj.Length; i++)
             {
                 Console.Write(string.Format("{0,-20}", stusubj[i]));
             }
 
             Console.WriteLine(string.Format("{0,-20}{1,-20}{2,-20}", "Total Marks","Subject Status","Total Distinctions"));
-
+            //using nested for loop to display all the students with their details from the global variable list.
             foreach (var student in stulist)
             {
                 foreach (var detail in student)
