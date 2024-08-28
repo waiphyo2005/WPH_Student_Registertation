@@ -250,6 +250,11 @@ namespace Testing
         //Method that allow users to choose which grade student details that they want to see. 
         void displayStudents()
         {
+            Console.WriteLine();
+            Console.WriteLine(" ==========================");
+            Console.WriteLine("| View Registered Students |");
+            Console.WriteLine(" ==========================");
+            Console.WriteLine();
             Console.Write("Please insert the Grade that you want to see the students: ");
             int dGrade = Convert.ToInt32(Console.ReadLine());
             //using switch case to call showStudents method with perimeters according to the grade that user inserts.
