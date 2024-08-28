@@ -307,7 +307,7 @@ namespace Testing
             Console.WriteLine("==================================");
             Console.WriteLine();
 
-            Console.Write(string.Format("{0,-20}{1,-20}{2,-20}","Name", "Age", "Grade"));
+            Console.Write(string.Format("{0,-20}{1,-20}{2,-20}", "Name", "Age", "Grade"));
             //using for loop to display subjects from global variable array.
             for (int i = 0; i < stusubj.Length; i++)
             {
@@ -316,7 +316,7 @@ namespace Testing
 
             Console.WriteLine(string.Format("{0,-20}{1,-20}{2,-20}", "Total Marks","Subject Status","Total Distinctions"));
             ///using if else to check whether the list is empty or not.
-            if (stulist != null)
+            if (stulist.Count == 0)
             {
                 Console.WriteLine("\nRecord is Empty!\n");
             }
