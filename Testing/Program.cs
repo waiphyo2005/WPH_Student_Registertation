@@ -315,17 +315,24 @@ namespace Testing
             }
 
             Console.WriteLine(string.Format("{0,-20}{1,-20}{2,-20}", "Total Marks","Subject Status","Total Distinctions"));
-            //using nested for loop to display all the students with their details from the global variable list.
-            foreach (var student in stulist)
+            ///using if else to check whether the list is empty or not.
+            if (stulist != null)
             {
-                foreach (var detail in student)
-                {
-                    Console.Write(string.Format("{0,-20}",detail));
-                }
-
-                Console.WriteLine();
+                Console.WriteLine("\nRecord is Empty!\n");
             }
+            else
+            {
+                //using nested for loop to display all the students with their details from the global variable list.
+                foreach (var student in stulist)
+                {
+                    foreach (var detail in student)
+                    {
+                        Console.Write(string.Format("{0,-20}", detail));
+                    }
 
+                    Console.WriteLine();
+                }
+            }
             MainMenu();
         }
     }
