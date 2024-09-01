@@ -14,7 +14,7 @@ namespace Testing
     {
         //Global Variables
         //jagged array to store subjects by grades.
-        string[][] gradeSubjects = new string[][]
+        static string[][] gradeSubjects = new string[][]
         {
             new string[] { "Myanmar", "English", "Maths" },
             new string[] { "Myanmar", "English", "Maths" },
@@ -29,16 +29,16 @@ namespace Testing
             new string[] { "Myanmar", "English", "Maths", "Physics", "Chemistry", "Biology" },
         };
         //2D list to store all the student details of each grade.
-        List<List<object>> g1Details = new List<List<object>>();
-        List<List<object>> g2Details = new List<List<object>>();
-        List<List<object>> g3Details = new List<List<object>>();
-        List<List<object>> g4Details = new List<List<object>>();
-        List<List<object>> g5Details = new List<List<object>>();
-        List<List<object>> g6Details = new List<List<object>>();
-        List<List<object>> g7Details = new List<List<object>>();
-        List<List<object>> g8Details = new List<List<object>>();
-        List<List<object>> g9Details = new List<List<object>>();
-        List<List<object>> g10Details = new List<List<object>>();
+        static List<List<object>> g1Details = new List<List<object>>();
+        static List<List<object>> g2Details = new List<List<object>>();
+        static List<List<object>> g3Details = new List<List<object>>();
+        static List<List<object>> g4Details = new List<List<object>>();
+        static List<List<object>> g5Details = new List<List<object>>();
+        static List<List<object>> g6Details = new List<List<object>>();
+        static List<List<object>> g7Details = new List<List<object>>();
+        static List<List<object>> g8Details = new List<List<object>>();
+        static List<List<object>> g9Details = new List<List<object>>();
+        static List<List<object>> g10Details = new List<List<object>>();
 
         static void Main(string[] args)
         {
@@ -46,14 +46,11 @@ namespace Testing
             Console.WriteLine("|| Welcome to Student Registration System ||");
             Console.WriteLine("============================================");
             Console.WriteLine();
-            //cannot call void method from static void method.
-            //Because its an intance method.
-            //Therefore creating an instance of the class to call the void method.
-            Program student = new Program();
-            student.MainMenu();
+
+            MainMenu();
         }
         //Method for Main Menu.
-        void MainMenu()
+        static void MainMenu()
         {
             int perform;
             Console.WriteLine();
@@ -81,7 +78,7 @@ namespace Testing
             }
         }
         //Method which allows user to choose which Grade user wants to reigster students for.
-        void insertStudent()
+        static void insertStudent()
         {
             Console.WriteLine();
             Console.WriteLine(" =======================");
@@ -132,7 +129,7 @@ namespace Testing
         }
         //Method for registering student details. 
         //Accepts user input for details and store it in the global variable list according to the perimeter.
-        void register(int studentGrade, List<List<object>> list)
+        static void register(int studentGrade, List<List<object>> list)
         {
             Console.WriteLine();
             Console.WriteLine("===============================");
@@ -221,7 +218,7 @@ namespace Testing
                 }
                 //checking the subjStatus list to see if student got any distinctions.
                 //if there is distinctions, it will add up the number of distinctions.
-                for (int i = 0;i < subjStatus.Count; i++)
+                for (int i = 0; i < subjStatus.Count; i++)
                 {
                     if (subjStatus[i] == 'D')
                     {
@@ -248,7 +245,7 @@ namespace Testing
             MainMenu();
         }
         //Method that allow users to choose which grade student details that they want to see. 
-        void displayStudents()
+        static void displayStudents()
         {
             Console.WriteLine();
             Console.WriteLine(" ==========================");
@@ -263,7 +260,7 @@ namespace Testing
                 case 1:
                     //calling showStudents mwthod to display students in grade 1.
                     //First perimeter is to show grade number, second perimeter is to display subjects in grade 1 and third perimeter is for displaying all students with thier details in grade 1.
-                    showStudents(1, gradeSubjects[0], g1Details); 
+                    showStudents(1, gradeSubjects[0], g1Details);
                     break;
                 case 2:
                     showStudents(2, gradeSubjects[1], g2Details);
@@ -299,7 +296,7 @@ namespace Testing
         }
         //Method to display all students with their details in thier respective grades. 
         //First perimeter is to show grade number, second perimeter is to display subjects and third perimeter is for displaying all students with their details.
-        void showStudents(int g, string[] stusubj, List<List<object>> stulist)
+        static void showStudents(int g, string[] stusubj, List<List<object>> stulist)
         {
             Console.WriteLine();
             Console.WriteLine("==================================");
@@ -314,7 +311,7 @@ namespace Testing
                 Console.Write(string.Format("{0,-20}", stusubj[i]));
             }
 
-            Console.WriteLine(string.Format("{0,-20}{1,-20}{2,-20}", "Total Marks","Subject Status","Total Distinctions"));
+            Console.WriteLine(string.Format("{0,-20}{1,-20}{2,-20}", "Total Marks", "Subject Status", "Total Distinctions"));
             ///using if else to check whether the list is empty or not.
             if (stulist.Count == 0)
             {
