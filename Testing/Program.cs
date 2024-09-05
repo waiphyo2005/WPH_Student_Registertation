@@ -13,41 +13,30 @@ namespace Testing
     internal class Program
     {
 
-        static List<List<object>> g1Details = new List<List<object>>();
-        static List<List<object>> g2Details = new List<List<object>>();
-        static List<List<object>> g3Details = new List<List<object>>();
-        static List<List<object>> g4Details = new List<List<object>>();
-        static List<List<object>> g5Details = new List<List<object>>();
-        static List<List<object>> g6Details = new List<List<object>>();
-        static List<List<object>> g7Details = new List<List<object>>();
-        static List<List<object>> g8Details = new List<List<object>>();
-        static List<List<object>> g9Details = new List<List<object>>();
-        static List<List<object>> g10Details = new List<List<object>>();
-
         static void Main(string[] args)
         {
             Console.WriteLine("============================================");
             Console.WriteLine("|| Welcome to Student Registration System ||");
             Console.WriteLine("============================================");
             Console.WriteLine();
-            
+
             MainMenu();
         }
-        
+
         static void MainMenu()
         {
             int perform;
             Console.WriteLine();
             Console.WriteLine("Please select option that you want to perform: \n1.Register Students\n2.View registered students\n3.Exit");
             perform = Convert.ToInt32(Console.ReadLine());
-            
+
             while (perform != 1 && perform != 2 && perform != 3)
             {
                 Console.WriteLine("\nInvalid Input!\n");
                 Console.WriteLine("Please select option that you want to perform: \n1.Register Students\n2.View registered students\n3.Exit");
                 perform = Convert.ToInt32(Console.ReadLine());
             }
-            
+
             switch (perform)
             {
                 case 1:
@@ -61,7 +50,7 @@ namespace Testing
                     break;
             }
         }
-        
+
         static void insertStudent()
         {
             Console.WriteLine();
@@ -74,72 +63,72 @@ namespace Testing
             int grade = Convert.ToInt32(Console.ReadLine());
 
             Subjects subject = new Subjects();
-
+            StudentDetail studentDetail = new StudentDetail();
             switch (grade)
             {
                 case 1:
-                    register(1, subject.g1Subjects, g1Details); 
+                    register(1, subject.g1Subjects, StudentDetail.g1Details);
                     break;
                 case 2:
-                    register(2,subject.g2Subjects, g2Details);
+                    register(2, subject.g2Subjects, StudentDetail.g2Details);
                     break;
                 case 3:
-                    register(3,subject.g3Subjects, g3Details);
+                    register(3, subject.g3Subjects, StudentDetail.g3Details);
                     break;
                 case 4:
-                    register(4, subject.g4Subjects, g4Details);
+                    register(4, subject.g4Subjects, StudentDetail.g4Details);
                     break;
                 case 5:
-                    register(5, subject.g5Subjects, g5Details);
+                    register(5, subject.g5Subjects, StudentDetail.g5Details);
                     break;
                 case 6:
-                    register(6, subject.g6Subjects, g6Details);
+                    register(6, subject.g6Subjects, StudentDetail.g6Details);
                     break;
                 case 7:
-                    register(7, subject.g7Subjects, g7Details);
+                    register(7, subject.g7Subjects, StudentDetail.g7Details);
                     break;
                 case 8:
-                    register(8, subject.g8Subjects, g8Details);
+                    register(8, subject.g8Subjects, StudentDetail.g8Details);
                     break;
                 case 9:
-                    register(9, subject.g9Subjects, g9Details);
+                    register(9, subject.g9Subjects, StudentDetail.g9Details);
                     break;
                 case 10:
-                    register(10, subject.g10Subjects, g10Details);
+                    register(10, subject.g10Subjects, StudentDetail.g10Details);
                     break;
                 default:
                     Console.WriteLine("\nInvalid Input! Please insert a proper Grade (1 to 10)!\n");
-                    insertStudent(); 
+                    insertStudent();
                     break;
             }
         }
-        
+
         static void register(int studentGrade, List<string> stuSubject, List<List<object>> list)
         {
             Console.WriteLine();
             Console.WriteLine("===============================");
-            Console.WriteLine($" Register students for Grade {studentGrade}"); 
+            Console.WriteLine($" Register students for Grade {studentGrade}");
             Console.WriteLine("===============================");
             Console.WriteLine();
 
             bool another = true;
-            var phrase = @"^[a-zA-Z ]+$"; 
+            var phrase = @"^[a-zA-Z ]+$";
 
             while (another)
             {
-                double totalmarks = 0; 
+                double totalmarks = 0;
                 char status;
-                int distinction = 0; 
+                int distinction = 0;
                 List<object> student = new List<object>();
                 List<object> personalDetails = new List<object>();
                 List<object> allMarks = new List<object>();
                 List<object> additional = new List<object>();
-                List<char> subjStatus = new List<char>(); 
+                List<char> subjStatus = new List<char>();
 
                 Console.Write("Enter Student's Name: ");
                 string name = Console.ReadLine();
-                bool nameValid = Regex.IsMatch(name, phrase); 
-                
+                bool nameValid = Regex.IsMatch(name, phrase);
+
                 while (!nameValid)
                 {
                     Console.WriteLine("\nInvalid Input! Please insert a proper name!\n");
@@ -148,11 +137,11 @@ namespace Testing
                     nameValid = Regex.IsMatch(name, phrase);
                 }
 
-                personalDetails.Add(name); 
+                personalDetails.Add(name);
 
                 Console.Write("Enter Student's Age: ");
                 int age = Convert.ToInt32(Console.ReadLine());
-               
+
                 while (age < 5 || age > 120)
                 {
                     Console.WriteLine("\nInvalid Input! Please insert a proper age!\n");
@@ -160,25 +149,25 @@ namespace Testing
                     age = Convert.ToInt32(Console.ReadLine());
                 }
 
-                personalDetails.Add(age); 
-                personalDetails.Add(studentGrade); 
-                
+                personalDetails.Add(age);
+                personalDetails.Add(studentGrade);
+
                 for (int i = 0; i < stuSubject.Count; i++)
                 {
-                    
+
                     Console.Write($"Please Insert the marks of {stuSubject[i]}: ");
-                    
+
                     double marks = Convert.ToDouble(Console.ReadLine());
-                    
+
                     while (marks < 0 || marks > 100)
                     {
                         Console.WriteLine("\nInvalid Input! Please insert proper marks (0 to 100)!\n");
                         Console.Write($"Please Insert the marks of {stuSubject[i]}: ");
                         marks = Convert.ToDouble(Console.ReadLine());
                     }
-                    
+
                     allMarks.Add(marks);
-                    
+
                     if (marks < 40)
                     {
                         status = 'F';
@@ -191,28 +180,28 @@ namespace Testing
                     {
                         status = 'P';
                     }
-                    subjStatus.Add(status); 
-                    totalmarks += marks; 
+                    subjStatus.Add(status);
+                    totalmarks += marks;
                 }
-                additional.Add(totalmarks); 
-                
+                additional.Add(totalmarks);
+
                 if (subjStatus.Contains('F'))
                 {
-                    additional.Add("Fail"); 
+                    additional.Add("Fail");
                 }
                 else
                 {
-                    additional.Add("Pass"); 
+                    additional.Add("Pass");
                 }
-                
-                for (int i = 0;i < subjStatus.Count; i++)
+
+                for (int i = 0; i < subjStatus.Count; i++)
                 {
                     if (subjStatus[i] == 'D')
                     {
                         distinction++;
                     }
                 }
-                additional.Add(distinction); 
+                additional.Add(distinction);
                 student.AddRange(personalDetails);
                 student.AddRange(allMarks);
                 student.AddRange(additional);
@@ -230,11 +219,6 @@ namespace Testing
                 Console.WriteLine($"Student Total Distinctions: {additional[2]}");
                 Console.WriteLine();
 
-                foreach (var z in student)
-                {
-                    Console.WriteLine(z.ToString());
-                }
-
                 Console.WriteLine($"\nDo you want to register another student in Grade {studentGrade}?\n1.Yes\n2.No");
                 int rAnother = Convert.ToInt32(Console.ReadLine());
 
@@ -251,7 +235,7 @@ namespace Testing
 
             MainMenu();
         }
-        
+
         static void displayStudents()
         {
             Console.WriteLine();
@@ -265,42 +249,42 @@ namespace Testing
             switch (dGrade)
             {
                 case 1:
-                
-                    showStudents(1, subject.g1Subjects, g1Details); 
+
+                    showStudents(1, subject.g1Subjects, StudentDetail.g1Details);
                     break;
                 case 2:
-                    showStudents(2, subject.g2Subjects, g2Details);
+                    showStudents(2, subject.g2Subjects, StudentDetail.g2Details);
                     break;
                 case 3:
-                    showStudents(3, subject.g3Subjects, g3Details);
+                    showStudents(3, subject.g3Subjects, StudentDetail.g3Details);
                     break;
                 case 4:
-                    showStudents(4, subject.g4Subjects, g4Details);
+                    showStudents(4, subject.g4Subjects, StudentDetail.g4Details);
                     break;
                 case 5:
-                    showStudents(5, subject.g5Subjects, g5Details);
+                    showStudents(5, subject.g5Subjects, StudentDetail.g5Details);
                     break;
                 case 6:
-                    showStudents(6, subject.g6Subjects, g6Details);
+                    showStudents(6, subject.g6Subjects, StudentDetail.g6Details);
                     break;
                 case 7:
-                    showStudents(7, subject.g7Subjects, g7Details);
+                    showStudents(7, subject.g7Subjects, StudentDetail.g7Details);
                     break;
                 case 8:
-                    showStudents(8, subject.g8Subjects, g8Details);
+                    showStudents(8, subject.g8Subjects, StudentDetail.g8Details);
                     break;
                 case 9:
-                    showStudents(9, subject.g9Subjects, g9Details);
+                    showStudents(9, subject.g9Subjects, StudentDetail.g9Details);
                     break;
                 case 10:
-                    showStudents(10, subject.g10Subjects, g10Details);
+                    showStudents(10, subject.g10Subjects, StudentDetail.g10Details);
                     break;
                 default:
-                    displayStudents(); 
+                    displayStudents();
                     break;
             }
         }
-       
+
         static void showStudents(int g, List<string> stusubj, List<List<object>> stulist)
         {
             Console.WriteLine();
@@ -310,21 +294,21 @@ namespace Testing
             Console.WriteLine();
 
             Console.Write(string.Format("{0,-20}{1,-20}{2,-20}", "Name", "Age", "Grade"));
-            
+
             for (int i = 0; i < stusubj.Count; i++)
             {
                 Console.Write(string.Format("{0,-20}", stusubj[i]));
             }
 
-            Console.WriteLine(string.Format("{0,-20}{1,-20}{2,-20}", "Total Marks","Subject Status","Total Distinctions"));
-            
+            Console.WriteLine(string.Format("{0,-20}{1,-20}{2,-20}", "Total Marks", "Subject Status", "Total Distinctions"));
+
             if (stulist.Count == 0)
             {
                 Console.WriteLine("\nRecord is Empty!\n");
             }
             else
             {
-                
+
                 foreach (var student in stulist)
                 {
                     foreach (var detail in student)
@@ -350,6 +334,23 @@ namespace Testing
         public List<string> g8Subjects = new List<string> { "Myanmar", "English", "Maths", "Geography", "History", "Science" };
         public List<string> g9Subjects = new List<string> { "Myanmar", "English", "Maths", "Physics", "Chemistry", "Biology" };
         public List<string> g10Subjects = new List<string> { "Myanmar", "English", "Maths", "Physics", "Chemistry", "Biology" };
+
+    }
+    public class StudentDetail
+    {
+        public static List<List<object>> g1Details = new List<List<object>>();
+        public static List<List<object>> g2Details = new List<List<object>>();
+        public static List<List<object>> g3Details = new List<List<object>>();
+        public static List<List<object>> g4Details = new List<List<object>>();
+        public static List<List<object>> g5Details = new List<List<object>>();
+        public static List<List<object>> g6Details = new List<List<object>>();
+        public static List<List<object>> g7Details = new List<List<object>>();
+        public static List<List<object>> g8Details = new List<List<object>>();
+        public static List<List<object>> g9Details = new List<List<object>>();
+        public static List<List<object>> g10Details = new List<List<object>>();
+    }
+    public class Student
+    {
 
     }
 }
