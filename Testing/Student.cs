@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Testing
 {
-    internal class Student
+    public class Student
     {
         public void insertStudent()
         {
