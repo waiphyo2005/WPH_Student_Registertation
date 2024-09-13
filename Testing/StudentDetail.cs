@@ -8,15 +8,15 @@ namespace Testing
 {
     public class StudentDetail
     {
-        public static List<List<object>> g1Details = new List<List<object>>();
-        public static List<List<object>> g2Details = new List<List<object>>();
-        public static List<List<object>> g3Details = new List<List<object>>();
-        public static List<List<object>> g4Details = new List<List<object>>();
-        public static List<List<object>> g5Details = new List<List<object>>();
-        public static List<List<object>> g6Details = new List<List<object>>();
-        public static List<List<object>> g7Details = new List<List<object>>();
-        public static List<List<object>> g8Details = new List<List<object>>();
-        public static List<List<object>> g9Details = new List<List<object>>();
-        public static List<List<object>> g10Details = new List<List<object>>();
+        public static List<G1toG2Student>g1Details = new List<G1toG2Student>();
+        public static List<G1toG2Student> g2Details = new List<G1toG2Student>();
+        public static List<G3toG4Student> g3Details = new List<G3toG4Student>();
+        public static List<G3toG4Student> g4Details = new List<G3toG4Student>();
+        public static List<G5toG8Student> g5Details = new List<G5toG8Student>();
+        public static List<G5toG8Student> g6Details = new List<G5toG8Student>();
+        public static List<G5toG8Student> g7Details = new List<G5toG8Student>();
+        public static List<G5toG8Student> g8Details = new List<G5toG8Student>();
+        public static List<G9toG10Student> g9Details = new List<G9toG10Student>();
+        public static List<G9toG10Student> g10Details = new List<G9toG10Student>();
     }
 }

@@ -1,86 +1,160 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+using Microsoft.VisualBasic;
 
 namespace Testing
 {
-    public class Student
+    public abstract class Student
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public int age { get; set; }
-
-
-    }
-    public abstract class Details
-    {
-        public string id { get; }
         public string name { get; set; }
-        public int age { get; set; }
+        public DateTime birthday { get; set; }
+        public int age { get; private set; }
         public int grade { get; set; }
-        public double totalMarks { get; set; }
-        public bool status { get; }
+        public List<double> Marks { get; set; }
+        public double totalmarks { get; private set; }
+        public bool status { get; set; }
         public int distinctions { get; set; }
-        public abstract void marksCollection();
-    }
-    public class G1Details: Details
-    {
-        public override void marksCollection()
+        public void calculateAge()
         {
-            Subjects subjects = new Subjects();
-            for (int i = 0; i < subjects.g1Subjects.Count; i++)
+            age = DateTime.Now.Year - birthday.Year;
+        }
+
+        public abstract void collectMarks();
+        public double totalMarks()
+        {
+            totalmarks = 0;
+            foreach (var mark in Marks)
+            {
+                totalmarks += mark;
+            }
+            return totalmarks;
+        }
+        public bool statusCheck()
+        {
+            foreach (var mark in Marks)
+            {
+                if (mark < 40)
+                {
+                    status = false;
+                    return status;
+                }
+            }
+            status = true;
+            return status;
+        }
+        public int countDistinctions()
+        {
+            distinctions = 0;
+            foreach (var mark in Marks)
+            {
+                if (mark > 80)
+                {
+                    distinctions++;
+                }
+            }
+            return distinctions;
+        }
+
+
+    }
+    public class G1toG2Student : Student
+    {
+        public override void collectMarks()
+        {
+            Marks = new List<double>();
+            Subjects s1s2 = new Subjects();
+            for (int i = 0; i < s1s2.g1tog2Subjects.Count; i++)
             {
 
-                Console.Write($"Please Insert the marks of {subjects.g1Subjects[i]}: ");
+                Console.Write($"Please Insert the marks of {s1s2.g1tog2Subjects[i]}: ");
 
                 double marks = Convert.ToDouble(Console.ReadLine());
 
                 while (marks < 0 || marks > 100)
                 {
                     Console.WriteLine("\nInvalid Input! Please insert proper marks (0 to 100)!\n");
-                    Console.Write($"Please Insert the marks of {subjects.g1Subjects[i]}: ");
+                    Console.Write($"Please Insert the marks of {s1s2.g1tog2Subjects[i]}: ");
                     marks = Convert.ToDouble(Console.ReadLine());
                 }
-
-                //allMarks.Add(marks);
-
-                if (marks < 40)
-                {
-                    status = 'F';
-                }
-                else if (marks > 80)
-                {
-                    status = 'D';
-                }
-                else
-                {
-                    status = 'P';
-                }
-                subjStatus.Add(status);
-                totalmarks += marks;
+                Marks.Add(marks);
             }
-            additional.Add(totalmarks);
-
-            if (subjStatus.Contains('F'))
+        }
+    }
+    public class G3toG4Student : Student
+    {
+        public override void collectMarks()
+        {
+            Marks = new List<double>();
+            Subjects s3s5 = new Subjects();
+            for (int i = 0; i < s3s5.g3tog5Subjects.Count; i++)
             {
-                additional.Add("Fail");
-            }
-            else
-            {
-                additional.Add("Pass");
-            }
+                Console.Write($"Please Insert the marks of {s3s5.g3tog5Subjects[i]}: ");
 
-            for (int i = 0; i < subjStatus.Count; i++)
-            {
-                if (subjStatus[i] == 'D')
+                double marks = Convert.ToDouble(Console.ReadLine());
+
+                while (marks < 0 || marks > 100)
                 {
-                    distinction++;
+                    Console.WriteLine("\nInvalid Input! Please insert proper marks (0 to 100)!\n");
+                    Console.Write($"Please Insert the marks of {s3s5.g3tog5Subjects[i]}: ");
+                    marks = Convert.ToDouble(Console.ReadLine());
                 }
+                Marks.Add(marks);
             }
 
+        }
+    }
+    public class G5toG8Student : Student
+    {
+        
+        public override void collectMarks()
+        {
+            Marks = new List<double>();
+            Subjects s6s8 = new Subjects();
+            for (int i = 0; i < s6s8.g6tog8Subjects.Count; i++)
+            {
+                Console.Write($"Please Insert the marks of {s6s8.g6tog8Subjects[i]}: ");
+
+                double marks = Convert.ToDouble(Console.ReadLine());
+
+                while (marks < 0 || marks > 100)
+                {
+                    Console.WriteLine("\nInvalid Input! Please insert proper marks (0 to 100)!\n");
+                    Console.Write($"Please Insert the marks of {s6s8.g6tog8Subjects[i]}: ");
+                    marks = Convert.ToDouble(Console.ReadLine());
+                }
+                Marks.Add(marks);
+            }
+
+        }
+    }
+    public class G9toG10Student : Student
+    {
+        public override void collectMarks()
+        {
+            Marks = new List<double>();
+            Subjects s9s10 = new Subjects();
+            for (int i = 0; i < s9s10.g9tog10Subjects.Count; i++)
+            {
+
+                Console.Write($"Please Insert the marks of {s9s10.g9tog10Subjects[i]}: ");
+
+                double marks = Convert.ToDouble(Console.ReadLine());
+
+                while (marks < 0 || marks > 100)
+                {
+                    Console.WriteLine("\nInvalid Input! Please insert proper marks (0 to 100)!\n");
+                    Console.Write($"Please Insert the marks of {s9s10.g9tog10Subjects[i]}: ");
+                    marks = Convert.ToDouble(Console.ReadLine());
+                }
+                Marks.Add(marks);
+            }
         }
     }
 }
