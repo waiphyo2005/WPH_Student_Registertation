@@ -53,6 +53,11 @@ namespace TEST
                     MainMenu();
                     break;
                 case 2:
+                    Console.WriteLine();
+                    Console.WriteLine(" ==========================");
+                    Console.WriteLine("| View Registered Students |");
+                    Console.WriteLine(" ==========================");
+                    Console.WriteLine();
                     displayStudent();
                     MainMenu();
                     break;
@@ -152,24 +157,121 @@ namespace TEST
         }
         static void displayStudent()
         {
-            Console.WriteLine();
-            Console.WriteLine(" ==========================");
-            Console.WriteLine("| View Registered Students |");
-            Console.WriteLine(" ==========================");
-            Console.WriteLine();
+            Console.WriteLine("1.View All Students\n2.Filter by Grades");
+            int viewOption = Convert.ToInt32(Console.ReadLine());
+            switch (viewOption)
+            {
+                case 1:
+                    foreach (Student student in students)
+                    {
+                        Console.WriteLine($"Student Name: {student.Name}");
+                        Console.WriteLine($"Student Birthday: {student.Birthday.ToShortDateString()}");
+                        Console.WriteLine($"Student Age: {student.age}");
+                        foreach (var subject in student.marks)
+                        {
+                            Console.WriteLine($"Student Marks for {subject.Key}: {subject.Value}");
+                        }
+                        Console.WriteLine($"Student Total Marks: {student.totalMarks}");
+                        Console.WriteLine($"Student Result: {student.result}");
+                        Console.WriteLine($"Student Distinctions: {student.distinctions}");
+                        Console.WriteLine();
+                    }
+                    break;
+                    case 2:
+                    char filterField;
+                    Console.WriteLine("Please insert the grade that you want to see: ");
+                    int filterGrade = Convert.ToInt32(Console.ReadLine());
+                    switch (filterGrade)
+                    {
+                        case 1:
+                            viewStudents("1");
+                            break;
+                        case 2:
+                            viewStudents("2");
+                            break;
+                        case 3:
+                            viewStudents("3");
+                            break;
+                        case 4:
+                            viewStudents("4");
+                            break;
+                        case 5:
+                            viewStudents("5");
+                            break;
+                        case 6:
+                            viewStudents("6");
+                            break;
+                        case 7:
+                            viewStudents("7");
+                            break;
+                        case 8:
+                            viewStudents("8");
+                            break;
+                        case 9:
+                            Console.WriteLine("Choose Biology or Economics by inserting B/E: ");
+                            filterField = Convert.ToChar(Console.ReadLine());
+                            if (filterField == 'B')
+                            {
+                                viewStudents("9B");
+                                break;
+                            }
+                            else if (filterField == 'E')
+                            {
+                                viewStudents("9E");
+                                break;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Invalid Input!");
+                                displayStudent();
+                                break;
+                            }
+                        case 10:
+                            Console.WriteLine("Choose Biology or Economics by inserting B/E: ");
+                            filterField = Convert.ToChar(Console.ReadLine());
+                            if (filterField == 'B')
+                            {
+                                viewStudents("10B");
+                                break;
+                            }
+                            else if (filterField == 'E')
+                            {
+                                viewStudents("10E");
+                                break;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Invalid Input!");
+                                displayStudent();
+                                break;
+                            }
+                    }
+                    break;
+            }
+        }
+        static void viewStudents(string studentGradeFilter)
+        {
             foreach (Student student in students)
             {
-                Console.WriteLine($"Student Name: {student.Name}");
-                Console.WriteLine($"Student Birthday: {student.Birthday.ToShortDateString()}");
-                Console.WriteLine($"Student Age: {student.age}");
-                foreach (var subject in student.marks)
+                if (student.marks.ContainsKey(studentGradeFilter))
                 {
-                    Console.WriteLine($"Student Marks for {subject.Key}: {subject.Value}");
+                    //Console.WriteLine($"Student Name: {student.Name}");
+                    //Console.WriteLine($"Student Birthday: {student.Birthday.ToShortDateString()}");
+                    //Console.WriteLine($"Student Age: {student.age}");
+                    //foreach (var subject in student.marks)
+                    //{
+                    //    Console.WriteLine($"Student Marks for {subject.Key}: {subject.Value}");
+                    //}
+                    //Console.WriteLine($"Student Total Marks: {student.totalMarks}");
+                    //Console.WriteLine($"Student Result: {student.result}");
+                    //Console.WriteLine($"Student Distinctions: {student.distinctions}");
+                    //Console.WriteLine();
+                    
                 }
-                Console.WriteLine($"Student Total Marks: {student.totalMarks}");
-                Console.WriteLine($"Student Result: {student.result}");
-                Console.WriteLine($"Student Distinctions: {student.distinctions}");
-                Console.WriteLine();
+                else
+                {
+                    Console.WriteLine("No Student Registered !");
+                }
             }
         }
     }
