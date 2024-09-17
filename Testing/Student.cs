@@ -57,13 +57,13 @@ namespace TEST
                 return distinctions;
             }
         }
-        public void CreateStudent(string studName, DateTime studBirthday, int studAge, Dictionary<string, double> studmarks)
+        public void CreateStudent(string studName, DateTime studBirthday, int studAge, string studgrade, Dictionary<string, double> studmarks)
         {
             Name = studName;
             Birthday = studBirthday;
             age = studAge;
             marks = studmarks;
-
+            grade = studgrade;
             findTotalMarks();
             resultCheck();
             countDistinctions();
@@ -96,7 +96,7 @@ namespace TEST
                 double sMarks = Convert.ToDouble(Console.ReadLine());
                 studentMarks.Add(subjects[i], sMarks);
             }
-            CreateStudent(studentName, bday, stuage, studentMarks);
+            CreateStudent(studentName, bday, stuage, studGrade, studentMarks);
         }
         public (DateTime bday, int stuage) askBirthday()
         {

@@ -158,7 +158,9 @@ namespace TEST
         static void displayStudent()
         {
             Console.WriteLine("1.View All Students\n2.Filter by Grades");
+            Console.Write("Please select the option: ");
             int viewOption = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine();
             switch (viewOption)
             {
                 case 1:
@@ -179,7 +181,7 @@ namespace TEST
                     break;
                     case 2:
                     char filterField;
-                    Console.WriteLine("Please insert the grade that you want to see: ");
+                    Console.Write("Please insert the grade that you want to see: ");
                     int filterGrade = Convert.ToInt32(Console.ReadLine());
                     switch (filterGrade)
                     {
@@ -251,22 +253,22 @@ namespace TEST
         }
         static void viewStudents(string studentGradeFilter)
         {
+            Console.Write(string.Format("{0,-20} {1,-20} {2,-5} {3,-7}", "Name", "Birthday", "Age", "Grade"));
+            foreach (var subject in studentGrading.gradeSubjects[studentGradeFilter])
+            {
+                Console.Write($"{subject,-10}");
+            }
+            Console.WriteLine(string.Format("{0,-12} {1,-8} {2,-14}", "Total Marks", "Results", "Distinctions"));
             foreach (Student student in students)
             {
-                if (student.marks.ContainsKey(studentGradeFilter))
+                if (student.grade == studentGradeFilter)
                 {
-                    //Console.WriteLine($"Student Name: {student.Name}");
-                    //Console.WriteLine($"Student Birthday: {student.Birthday.ToShortDateString()}");
-                    //Console.WriteLine($"Student Age: {student.age}");
-                    //foreach (var subject in student.marks)
-                    //{
-                    //    Console.WriteLine($"Student Marks for {subject.Key}: {subject.Value}");
-                    //}
-                    //Console.WriteLine($"Student Total Marks: {student.totalMarks}");
-                    //Console.WriteLine($"Student Result: {student.result}");
-                    //Console.WriteLine($"Student Distinctions: {student.distinctions}");
-                    //Console.WriteLine();
-                    
+                    Console.Write($"{student.Name,-20} {student.Birthday.ToShortDateString(),-20} {student.age,-5} {student.grade,-7}");
+                    foreach (double mark in student.marks.Values)
+                    {
+                        Console.Write($"{mark,-10}");
+                    }
+                    Console.WriteLine($"{student.totalMarks,-12} {student.result,-8} {student.distinctions,-14}");
                 }
                 else
                 {
