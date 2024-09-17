@@ -1,160 +1,126 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.Collections.Specialized;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Xml.Linq;
-using Microsoft.VisualBasic;
 
-namespace Testing
+namespace TEST
 {
-    public abstract class Student
+    public class Student
     {
-        public string name { get; set; }
-        public DateTime birthday { get; set; }
+        public string Name { get; private set; }
+        public DateTime Birthday { get; private set; }
         public int age { get; private set; }
-        public int grade { get; set; }
-        public List<double> Marks { get; set; }
-        public double totalmarks { get; private set; }
-        public bool status { get; set; }
-        public int distinctions { get; set; }
-        public void calculateAge()
+        public string grade { get; private set; }
+        public Dictionary<string, double> marks { get; private set; }
+        public double totalMarks { get; private set; }
+        public int distinctions { get; private set; }
+        public string result { get; private set; }
+        public double findTotalMarks()
         {
-            age = DateTime.Now.Year - birthday.Year;
+            totalMarks = marks.Values.Sum();
+            return totalMarks;
         }
-
-        public abstract void collectMarks();
-        public double totalMarks()
+        public string resultCheck()
         {
-            totalmarks = 0;
-            foreach (var mark in Marks)
-            {
-                totalmarks += mark;
-            }
-            return totalmarks;
-        }
-        public bool statusCheck()
-        {
-            foreach (var mark in Marks)
+            foreach (var mark in marks.Values)
             {
                 if (mark < 40)
                 {
-                    status = false;
-                    return status;
+                    result = "Fail";
+                    return result;
                 }
             }
-            status = true;
-            return status;
+            result = "Pass";
+            return result;
         }
         public int countDistinctions()
         {
-            distinctions = 0;
-            foreach (var mark in Marks)
+            if (result == "Fail")
             {
-                if (mark > 80)
-                {
-                    distinctions++;
-                }
+                distinctions = 0;
+                return distinctions;
             }
-            return distinctions;
-        }
-
-
-    }
-    public class G1toG2Student : Student
-    {
-        public override void collectMarks()
-        {
-            Marks = new List<double>();
-            Subjects s1s2 = new Subjects();
-            for (int i = 0; i < s1s2.g1tog2Subjects.Count; i++)
+            else
             {
+                distinctions = 0;
 
-                Console.Write($"Please Insert the marks of {s1s2.g1tog2Subjects[i]}: ");
-
-                double marks = Convert.ToDouble(Console.ReadLine());
-
-                while (marks < 0 || marks > 100)
+                foreach (var mark in marks.Values)
                 {
-                    Console.WriteLine("\nInvalid Input! Please insert proper marks (0 to 100)!\n");
-                    Console.Write($"Please Insert the marks of {s1s2.g1tog2Subjects[i]}: ");
-                    marks = Convert.ToDouble(Console.ReadLine());
+                    if (mark > 80)
+                    {
+                        distinctions++;
+                    }
                 }
-                Marks.Add(marks);
+                return distinctions;
             }
         }
-    }
-    public class G3toG4Student : Student
-    {
-        public override void collectMarks()
+        public void CreateStudent(string studName, DateTime studBirthday, int studAge, Dictionary<string, double> studmarks)
         {
-            Marks = new List<double>();
-            Subjects s3s5 = new Subjects();
-            for (int i = 0; i < s3s5.g3tog5Subjects.Count; i++)
-            {
-                Console.Write($"Please Insert the marks of {s3s5.g3tog5Subjects[i]}: ");
+            Name = studName;
+            Birthday = studBirthday;
+            age = studAge;
+            marks = studmarks;
 
-                double marks = Convert.ToDouble(Console.ReadLine());
-
-                while (marks < 0 || marks > 100)
-                {
-                    Console.WriteLine("\nInvalid Input! Please insert proper marks (0 to 100)!\n");
-                    Console.Write($"Please Insert the marks of {s3s5.g3tog5Subjects[i]}: ");
-                    marks = Convert.ToDouble(Console.ReadLine());
-                }
-                Marks.Add(marks);
-            }
-
+            findTotalMarks();
+            resultCheck();
+            countDistinctions();
         }
-    }
-    public class G5toG8Student : Student
-    {
-        
-        public override void collectMarks()
+
+        public void getStudentInfo(string studGrade, List<string> subjects)
         {
-            Marks = new List<double>();
-            Subjects s6s8 = new Subjects();
-            for (int i = 0; i < s6s8.g6tog8Subjects.Count; i++)
+            //name
+            string phrase = @"^[a-zA-Z ]+$";
+            Console.Write("Enter Student's Name: ");
+            string studentName = Console.ReadLine();
+            bool nameValid = Regex.IsMatch(studentName, phrase);
+
+            while (!nameValid)
             {
-                Console.Write($"Please Insert the marks of {s6s8.g6tog8Subjects[i]}: ");
-
-                double marks = Convert.ToDouble(Console.ReadLine());
-
-                while (marks < 0 || marks > 100)
-                {
-                    Console.WriteLine("\nInvalid Input! Please insert proper marks (0 to 100)!\n");
-                    Console.Write($"Please Insert the marks of {s6s8.g6tog8Subjects[i]}: ");
-                    marks = Convert.ToDouble(Console.ReadLine());
-                }
-                Marks.Add(marks);
+                Console.WriteLine("\nInvalid Input! Please insert a proper name!\n");
+                Console.Write("Enter Student's Name: ");
+                studentName = Console.ReadLine();
+                nameValid = Regex.IsMatch(studentName, phrase);
             }
 
+            //birthday
+            (DateTime bday, int stuage) = askBirthday();
+
+            //marks
+            Dictionary<string, double> studentMarks = new Dictionary<string, double>();
+            for (int i = 0; i < subjects.Count; i++)
+            {
+                Console.Write($"Insert marks for {subjects[i]}: ");
+                double sMarks = Convert.ToDouble(Console.ReadLine());
+                studentMarks.Add(subjects[i], sMarks);
+            }
+            CreateStudent(studentName, bday, stuage, studentMarks);
         }
-    }
-    public class G9toG10Student : Student
-    {
-        public override void collectMarks()
+        public (DateTime bday, int stuage) askBirthday()
         {
-            Marks = new List<double>();
-            Subjects s9s10 = new Subjects();
-            for (int i = 0; i < s9s10.g9tog10Subjects.Count; i++)
+            //birthday
+            int stuage = 0;
+            string datepattern = @"^(0[1-9]|1[0-2])/([0-2][0-9]|3[01])/\d{4}$";
+            Console.Write("Enter Student's Birthday(MM/DD/YYYY): ");
+            string studentBirthday = Console.ReadLine();
+            bool bdayValid = Regex.IsMatch(studentBirthday, datepattern);
+            while (!bdayValid)
             {
-
-                Console.Write($"Please Insert the marks of {s9s10.g9tog10Subjects[i]}: ");
-
-                double marks = Convert.ToDouble(Console.ReadLine());
-
-                while (marks < 0 || marks > 100)
-                {
-                    Console.WriteLine("\nInvalid Input! Please insert proper marks (0 to 100)!\n");
-                    Console.Write($"Please Insert the marks of {s9s10.g9tog10Subjects[i]}: ");
-                    marks = Convert.ToDouble(Console.ReadLine());
-                }
-                Marks.Add(marks);
+                Console.WriteLine("Incorrect Format or Invalid Birthday! Please insert again!");
+                Console.Write("Enter Student's Birthday(MM/DD/YYYY): ");
+                studentBirthday = Console.ReadLine();
+                bdayValid = Regex.IsMatch(studentBirthday, datepattern);
             }
+            DateTime bday = DateTime.Parse(studentBirthday);
+            stuage = DateTime.Now.Year - bday.Year;
+            if (stuage < 5 || stuage > 120)
+            {
+                Console.WriteLine("Invalid Birthday");
+                askBirthday();
+            }
+            return (bday, stuage);
         }
     }
 }
