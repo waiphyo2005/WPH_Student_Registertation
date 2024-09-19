@@ -164,6 +164,11 @@ namespace TEST
             switch (viewOption)
             {
                 case 1:
+                    if (students.Count == 0)
+                    {
+                        Console.WriteLine("There is no registered Student!");
+                        break;
+                    }
                     foreach (Student student in students)
                     {
                         Console.WriteLine($"Student Name: {student.Name}");
