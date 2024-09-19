@@ -13,8 +13,7 @@ namespace TEST
 {
     public class Program
     {
-        //public static StudentGrading studentGrading = new StudentGrading();
-        public List<Student> students = new List<Student>();
+        public static List<Student> studentDetails = new List<Student>();
 
         static void Main(string[] args)
         {
@@ -49,7 +48,8 @@ namespace TEST
                     Console.WriteLine("| Register New Students |");
                     Console.WriteLine(" =======================");
                     Console.WriteLine();
-                    student.insertStudent(students);
+                    student = student.insertStudent();
+                    studentDetails.Add(student);
                     MainMenu();
                     break;
                 case 2:
@@ -58,7 +58,7 @@ namespace TEST
                     Console.WriteLine("| View Registered Students |");
                     Console.WriteLine(" ==========================");
                     Console.WriteLine();
-                    student.displayStudent();
+                    student.displayStudent(studentDetails);
                     MainMenu();
                     break;
                 case 3:
