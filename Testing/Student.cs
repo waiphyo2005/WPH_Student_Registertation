@@ -94,6 +94,12 @@ namespace TEST
             {
                 Console.Write($"Insert marks for {subjects[i]}: ");
                 double sMarks = Convert.ToDouble(Console.ReadLine());
+                while (sMarks < 0 || sMarks > 100)
+                {
+                    Console.WriteLine("\nInvalid Input! Please insert proper marks (0 to 100)!\n");
+                    Console.Write($"Please Insert the marks of {subjects[i]}: ");
+                    sMarks = Convert.ToDouble(Console.ReadLine());
+                }
                 studentMarks.Add(subjects[i], sMarks);
             }
             CreateStudent(studentName, bday, stuage, studGrade, studentMarks);
@@ -102,24 +108,35 @@ namespace TEST
         {
             //birthday
             int stuage = 0;
-            string datepattern = @"^(0[1-9]|1[0-2])/([0-2][0-9]|3[01])/\d{4}$";
-            Console.Write("Enter Student's Birthday(MM/DD/YYYY): ");
-            string studentBirthday = Console.ReadLine();
-            bool bdayValid = Regex.IsMatch(studentBirthday, datepattern);
-            while (!bdayValid)
+            bool ageValid = true;
+            DateTime bday = DateTime.Now;
+            do
             {
-                Console.WriteLine("Incorrect Format or Invalid Birthday! Please insert again!");
+                string datepattern = @"^(0[1-9]|1[0-2])/([0-2][0-9]|3[01])/\d{4}$";
                 Console.Write("Enter Student's Birthday(MM/DD/YYYY): ");
-                studentBirthday = Console.ReadLine();
-                bdayValid = Regex.IsMatch(studentBirthday, datepattern);
-            }
-            DateTime bday = DateTime.Parse(studentBirthday);
-            stuage = DateTime.Now.Year - bday.Year;
-            if (stuage < 5 || stuage > 120)
-            {
-                Console.WriteLine("Invalid Birthday");
-                askBirthday();
-            }
+                string studentBirthday = Console.ReadLine();
+                bool bdayValid = Regex.IsMatch(studentBirthday, datepattern);
+                while (!bdayValid)
+                {
+                    Console.WriteLine("Incorrect Format or Invalid Birthday! Please insert again!");
+                    Console.Write("Enter Student's Birthday(MM/DD/YYYY): ");
+                    studentBirthday = Console.ReadLine();
+                    bdayValid = Regex.IsMatch(studentBirthday, datepattern);
+                }
+                DateTime sBday = DateTime.Parse(studentBirthday);
+                int sAge = DateTime.Now.Year - sBday.Year;
+                if (sAge < 5 || sAge > 120)
+                {
+                    Console.WriteLine("Invalid Birthday");
+                    ageValid = false;
+                }
+                else
+                {
+                    ageValid = true;
+                    stuage = sAge;
+                    bday = sBday;
+                }
+            } while (!ageValid);
             return (bday, stuage);
         }
     }

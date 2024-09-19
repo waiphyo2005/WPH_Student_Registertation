@@ -167,6 +167,7 @@ namespace TEST
                     foreach (Student student in students)
                     {
                         Console.WriteLine($"Student Name: {student.Name}");
+                        Console.WriteLine($"Student Grade: {student.grade}");
                         Console.WriteLine($"Student Birthday: {student.Birthday.ToShortDateString()}");
                         Console.WriteLine($"Student Age: {student.age}");
                         foreach (var subject in student.marks)
@@ -253,27 +254,36 @@ namespace TEST
         }
         static void viewStudents(string studentGradeFilter)
         {
-            Console.Write(string.Format("{0,-20} {1,-20} {2,-5} {3,-7}", "Name", "Birthday", "Age", "Grade"));
+            List<Student> filteredStudents = new List<Student>();
+            Console.Write(string.Format("{0,-20} {1,-12} {2,-5} {3,-7}", "Name", "Birthday", "Age", "Grade"));
             foreach (var subject in studentGrading.gradeSubjects[studentGradeFilter])
             {
-                Console.Write($"{subject,-10}");
+                Console.Write($"{subject,-16}");
             }
             Console.WriteLine(string.Format("{0,-12} {1,-8} {2,-14}", "Total Marks", "Results", "Distinctions"));
             foreach (Student student in students)
             {
                 if (student.grade == studentGradeFilter)
                 {
-                    Console.Write($"{student.Name,-20} {student.Birthday.ToShortDateString(),-20} {student.age,-5} {student.grade,-7}");
+                    
+                    filteredStudents.Add(student);
+                }
+            }
+            if (filteredStudents.Count > 0)
+            {
+                foreach (Student student in filteredStudents)
+                {
+                    Console.Write($"{student.Name,-20} {student.Birthday.ToShortDateString(),-12} {student.age,-5} {student.grade,-7}");
                     foreach (double mark in student.marks.Values)
                     {
-                        Console.Write($"{mark,-10}");
+                        Console.Write($"{mark,-16}");
                     }
                     Console.WriteLine($"{student.totalMarks,-12} {student.result,-8} {student.distinctions,-14}");
                 }
-                else
-                {
-                    Console.WriteLine("No Student Registered !");
-                }
+            }
+            else
+            {
+                Console.WriteLine("There is no registered students in this grade!");
             }
         }
     }
