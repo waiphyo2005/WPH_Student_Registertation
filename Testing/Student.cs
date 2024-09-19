@@ -57,6 +57,40 @@ namespace TEST
                 return distinctions;
             }
         }
+        public (DateTime bday, int stuage) askBirthday()
+        {
+            int stuage = 0;
+            bool ageValid = true;
+            DateTime bday = DateTime.Now;
+            do
+            {
+                string datepattern = @"^(0[1-9]|1[0-2])/([0-2][0-9]|3[01])/\d{4}$";
+                Console.Write("Enter Student's Birthday(MM/DD/YYYY): ");
+                string studentBirthday = Console.ReadLine();
+                bool bdayValid = Regex.IsMatch(studentBirthday, datepattern);
+                while (!bdayValid)
+                {
+                    Console.WriteLine("Incorrect Format or Invalid Birthday! Please insert again!");
+                    Console.Write("Enter Student's Birthday(MM/DD/YYYY): ");
+                    studentBirthday = Console.ReadLine();
+                    bdayValid = Regex.IsMatch(studentBirthday, datepattern);
+                }
+                DateTime sBday = DateTime.Parse(studentBirthday);
+                int sAge = DateTime.Now.Year - sBday.Year;
+                if (sAge < 5 || sAge > 120)
+                {
+                    Console.WriteLine("Invalid Birthday");
+                    ageValid = false;
+                }
+                else
+                {
+                    ageValid = true;
+                    stuage = sAge;
+                    bday = sBday;
+                }
+            } while (!ageValid);
+            return (bday, stuage);
+        }
         public void CreateStudent(string studName, DateTime studBirthday, int studAge, string studgrade, Dictionary<string, double> studmarks)
         {
             Name = studName;
@@ -104,40 +138,226 @@ namespace TEST
             }
             CreateStudent(studentName, bday, stuage, studGrade, studentMarks);
         }
-        public (DateTime bday, int stuage) askBirthday()
+        public void insertStudent()
         {
-            //birthday
-            int stuage = 0;
-            bool ageValid = true;
-            DateTime bday = DateTime.Now;
-            do
+            char field;
+            Student student = new Student();
+            Console.Write("Please insert Student's Grade Number: ");
+            int grade = Convert.ToInt32(Console.ReadLine());
+
+            switch (grade)
             {
-                string datepattern = @"^(0[1-9]|1[0-2])/([0-2][0-9]|3[01])/\d{4}$";
-                Console.Write("Enter Student's Birthday(MM/DD/YYYY): ");
-                string studentBirthday = Console.ReadLine();
-                bool bdayValid = Regex.IsMatch(studentBirthday, datepattern);
-                while (!bdayValid)
+                case 1:
+                    student.getStudentInfo("1", Program.studentGrading.gradeSubjects["1"]);
+                    Program.students.Add(student);
+                    break;
+                case 2:
+                    student.getStudentInfo("2", Program.studentGrading.gradeSubjects["2"]);
+                    Program.students.Add(student);
+                    break;
+                case 3:
+                    student.getStudentInfo("3", Program.studentGrading.gradeSubjects["3"]);
+                    Program.students.Add(student);
+                    break;
+                case 4:
+                    student.getStudentInfo("4", Program.studentGrading.gradeSubjects["4"]);
+                    Program.students.Add(student);
+                    break;
+                case 5:
+                    student.getStudentInfo("5", Program.studentGrading.gradeSubjects["5"]);
+                    Program.students.Add(student);
+                    break;
+                case 6:
+                    student.getStudentInfo("6", Program.studentGrading.gradeSubjects["6"]);
+                    Program.students.Add(student);
+                    break;
+                case 7:
+                    student.getStudentInfo("7", Program.studentGrading.gradeSubjects["7"]);
+                    Program.students.Add(student);
+                    break;
+                case 8:
+                    student.getStudentInfo("8", Program.studentGrading.gradeSubjects["8"]);
+                    Program.students.Add(student);
+                    break;
+                case 9:
+                    Console.WriteLine("Choose Biology or Economics by inserting B/E: ");
+                    field = Convert.ToChar(Console.ReadLine());
+                    if (field == 'B')
+                    {
+                        student.getStudentInfo("9B", Program.studentGrading.gradeSubjects["9B"]);
+                        Program.students.Add(student);
+                        break;
+                    }
+                    else if (field == 'E')
+                    {
+                        student.getStudentInfo("9E", Program.studentGrading.gradeSubjects["9E"]);
+                        Program.students.Add(student);
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid Input!");
+                        insertStudent();
+                        break;
+                    }
+                case 10:
+                    Console.WriteLine("Choose Biology or Economics by inserting B/E: ");
+                    field = Convert.ToChar(Console.ReadLine());
+                    if (field == 'B')
+                    {
+                        student.getStudentInfo("10B", Program.studentGrading.gradeSubjects["10B"]);
+                        Program.students.Add(student);
+                        break;
+                    }
+                    else if (field == 'E')
+                    {
+                        student.getStudentInfo("10E", Program.studentGrading.gradeSubjects["10E"]);
+                        Program.students.Add(student);
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid Input!");
+                        insertStudent();
+                        break;
+                    }
+                default:
+                    Console.WriteLine("Invalid Input!");
+                    insertStudent();
+                    break;
+            }
+        }
+        public void displayStudent()
+        {
+            Console.WriteLine("1.View All Students\n2.Filter by Grades");
+            Console.Write("Please select the option: ");
+            int viewOption = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine();
+            switch (viewOption)
+            {
+                case 1:
+                    foreach (Student student in Program.students)
+                    {
+                        Console.WriteLine($"Student Name: {student.Name}");
+                        Console.WriteLine($"Student Grade: {student.grade}");
+                        Console.WriteLine($"Student Birthday: {student.Birthday.ToShortDateString()}");
+                        Console.WriteLine($"Student Age: {student.age}");
+                        foreach (var subject in student.marks)
+                        {
+                            Console.WriteLine($"Student Marks for {subject.Key}: {subject.Value}");
+                        }
+                        Console.WriteLine($"Student Total Marks: {student.totalMarks}");
+                        Console.WriteLine($"Student Result: {student.result}");
+                        Console.WriteLine($"Student Distinctions: {student.distinctions}");
+                        Console.WriteLine();
+                    }
+                    break;
+                case 2:
+                    Student sView = new Student();
+                    char filterField;
+                    Console.Write("Please insert the grade that you want to see: ");
+                    int filterGrade = Convert.ToInt32(Console.ReadLine());
+                    switch (filterGrade)
+                    {
+                        case 1:
+                            sView.viewStudents("1");
+                            break;
+                        case 2:
+                            sView.viewStudents("2");
+                            break;
+                        case 3:
+                            sView.viewStudents("3");
+                            break;
+                        case 4:
+                            sView.viewStudents("4");
+                            break;
+                        case 5:
+                            sView.viewStudents("5");
+                            break;
+                        case 6:
+                            sView.viewStudents("6");
+                            break;
+                        case 7:
+                            sView.viewStudents("7");
+                            break;
+                        case 8:
+                            sView.viewStudents("8");
+                            break;
+                        case 9:
+                            Console.WriteLine("Choose Biology or Economics by inserting B/E: ");
+                            filterField = Convert.ToChar(Console.ReadLine());
+                            if (filterField == 'B')
+                            {
+                                sView.viewStudents("9B");
+                                break;
+                            }
+                            else if (filterField == 'E')
+                            {
+                                sView.viewStudents("9E");
+                                break;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Invalid Input!");
+                                displayStudent();
+                                break;
+                            }
+                        case 10:
+                            Console.WriteLine("Choose Biology or Economics by inserting B/E: ");
+                            filterField = Convert.ToChar(Console.ReadLine());
+                            if (filterField == 'B')
+                            {
+                                sView.viewStudents("10B");
+                                break;
+                            }
+                            else if (filterField == 'E')
+                            {
+                                sView.viewStudents("10E");
+                                break;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Invalid Input!");
+                                displayStudent();
+                                break;
+                            }
+                    }
+                    break;
+            }
+        }
+        public void viewStudents(string studentGradeFilter)
+        {
+            List<Student> filteredStudents = new List<Student>();
+            Console.Write(string.Format("{0,-20} {1,-12} {2,-5} {3,-7}", "Name", "Birthday", "Age", "Grade"));
+            foreach (var subject in Program.studentGrading.gradeSubjects[studentGradeFilter])
+            {
+                Console.Write($"{subject,-16}");
+            }
+            Console.WriteLine(string.Format("{0,-12} {1,-8} {2,-14}", "Total Marks", "Results", "Distinctions"));
+            foreach (Student student in Program.students)
+            {
+                if (student.grade == studentGradeFilter)
                 {
-                    Console.WriteLine("Incorrect Format or Invalid Birthday! Please insert again!");
-                    Console.Write("Enter Student's Birthday(MM/DD/YYYY): ");
-                    studentBirthday = Console.ReadLine();
-                    bdayValid = Regex.IsMatch(studentBirthday, datepattern);
+
+                    filteredStudents.Add(student);
                 }
-                DateTime sBday = DateTime.Parse(studentBirthday);
-                int sAge = DateTime.Now.Year - sBday.Year;
-                if (sAge < 5 || sAge > 120)
+            }
+            if (filteredStudents.Count > 0)
+            {
+                foreach (Student student in filteredStudents)
                 {
-                    Console.WriteLine("Invalid Birthday");
-                    ageValid = false;
+                    Console.Write($"{student.Name,-20} {student.Birthday.ToShortDateString(),-12} {student.age,-5} {student.grade,-7}");
+                    foreach (double mark in student.marks.Values)
+                    {
+                        Console.Write($"{mark,-16}");
+                    }
+                    Console.WriteLine($"{student.totalMarks,-12} {student.result,-8} {student.distinctions,-14}");
                 }
-                else
-                {
-                    ageValid = true;
-                    stuage = sAge;
-                    bday = sBday;
-                }
-            } while (!ageValid);
-            return (bday, stuage);
+            }
+            else
+            {
+                Console.WriteLine("There is no registered students in this grade!");
+            }
         }
     }
 }
