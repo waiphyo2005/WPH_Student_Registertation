@@ -10,8 +10,11 @@ namespace TEST
 {
     public class Student
     {
-        StudentGrading studentGrading = new StudentGrading();
-        Student student = new Student();
+        //StudentGrading studentGrading = new StudentGrading();
+        //public void initializeSubjects()
+        //{
+        //    studentGrading.SubjectGrading();
+        //}
         
         public string Name { get; private set; }
         public DateTime Birthday { get; private set; }
@@ -141,197 +144,233 @@ namespace TEST
             }
             CreateStudent(studentName, bday, stuage, studGrade, studentMarks);
         }
-        public Student insertStudent()
+        public Student insertStudent(Dictionary<string, List<string>> gradeSubjects)
         {
-            studentGrading.SubjectGrading();
             char field;
-            Console.Write("Please insert Student's Grade Number: ");
-            int grade = Convert.ToInt32(Console.ReadLine());
-
-            switch (grade)
+            bool validGrade = false;
+            Student student = new Student();
+            while (!validGrade)
             {
-                case 1:
-                    student.getStudentInfo("1", studentGrading.gradeSubjects["1"]);
-                    return student;
-                case 2:
-                    student.getStudentInfo("2", studentGrading.gradeSubjects["2"]);
-                    return student;
-                case 3:
-                    student.getStudentInfo("3", studentGrading.gradeSubjects["3"]);
-                    return student;
-                case 4:
-                    student.getStudentInfo("4", studentGrading.gradeSubjects["4"]);
-                    return student;
-                case 5:
-                    student.getStudentInfo("5", studentGrading.gradeSubjects["5"]);
-                    return student;
-                case 6:
-                    student.getStudentInfo("6", studentGrading.gradeSubjects["6"]);
-                    return student;
-                case 7:
-                    student.getStudentInfo("7", studentGrading.gradeSubjects["7"]);
-                    return student;
-                case 8:
-                    student.getStudentInfo("8", studentGrading.gradeSubjects["8"]);
-                    return student;
-                case 9:
-                    Console.WriteLine("Choose Biology or Economics by inserting B/E: ");
-                    field = Convert.ToChar(Console.ReadLine());
-                    if (field == 'B')
-                    {
-                        student.getStudentInfo("9B", studentGrading.gradeSubjects["9B"]);
-                        return student;
-                    }
-                    else if (field == 'E')
-                    {
-                        student.getStudentInfo("9E", studentGrading.gradeSubjects["9E"]);
-                        return student;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid Input!");
-                        student.insertStudent();
-                        return student;
-                    }
-                case 10:
-                    Console.WriteLine("Choose Biology or Economics by inserting B/E: ");
-                    field = Convert.ToChar(Console.ReadLine());
-                    if (field == 'B')
-                    {
-                        student.getStudentInfo("10B", studentGrading.gradeSubjects["10B"]);
-                        return student;
-                    }
-                    else if (field == 'E')
-                    {
-                        student.getStudentInfo("10E", studentGrading.gradeSubjects["10E"]);
-                        return student;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid Input!");
-                        insertStudent();
-                        return student;
-                    }
-                default:
-                    Console.WriteLine("Invalid Input!");
-                    insertStudent();
-                    return student;
+                Console.Write("Please insert Student's Grade Number: ");
+                int grade = Convert.ToInt32(Console.ReadLine());
+                switch (grade)
+                {
+                    case 1:
+                        validGrade = true;
+                        student.getStudentInfo("1", gradeSubjects["1"]);
+                        break;
+                    case 2:
+                        validGrade = true;
+                        student.getStudentInfo("2", gradeSubjects["2"]);
+                        break;
+                    case 3:
+                        validGrade = true;
+                        student.getStudentInfo("3", gradeSubjects["3"]);
+                        break;
+                    case 4:
+                        validGrade = true;
+                        student.getStudentInfo("4", gradeSubjects["4"]);
+                        break;
+                    case 5:
+                        validGrade = true;
+                        student.getStudentInfo("5", gradeSubjects["5"]);
+                        break;
+                    case 6:
+                        validGrade = true;
+                        student.getStudentInfo("6", gradeSubjects["6"]);
+                        break;
+                    case 7:
+                        validGrade = true;
+                        student.getStudentInfo("7", gradeSubjects["7"]);
+                        break;
+                    case 8:
+                        validGrade = true;
+                        student.getStudentInfo("8", gradeSubjects["8"]);
+                        break;
+                    case 9:
+                        validGrade = true;
+                        Console.WriteLine("Choose Biology or Economics by inserting B/E: ");
+                        field = Convert.ToChar(Console.ReadLine());
+                        if (field == 'B')
+                        {
+                            validGrade = true;
+                            student.getStudentInfo("9B", gradeSubjects["9B"]);
+                            break;
+                        }
+                        else if (field == 'E')
+                        {
+                            validGrade = true;
+                            student.getStudentInfo("9E", gradeSubjects["9E"]);
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("\nInvalid Input!\n");
+                            validGrade= false;
+                            break;
+                        }
+                    case 10:
+                        Console.WriteLine("Choose Biology or Economics by inserting B/E: ");
+                        field = Convert.ToChar(Console.ReadLine());
+                        if (field == 'B')
+                        {
+                            validGrade = true;
+                            student.getStudentInfo("10B", gradeSubjects["10B"]);
+                            break;
+                        }
+                        else if (field == 'E')
+                        {
+                            validGrade = true;
+                            student.getStudentInfo("10E", gradeSubjects["10E"]);
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid Input!");
+                            validGrade = false;
+                            break;
+                        }
+                    default:
+                        Console.WriteLine("\nInvalid Input!\n");
+                        validGrade = false;
+                        break;
+                }
             }
+            return student;
         }
         public void displayStudent(List<Student> details)
         {
-            Console.WriteLine("1.View All Students\n2.Filter by Grades");
-            Console.Write("Please select the option: ");
-            int viewOption = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine();
-            switch (viewOption)
+            bool validOption = false;
+            while (!validOption)
             {
-                case 1:
-                    foreach (Student student in details)
-                    {
-                        Console.WriteLine($"Student Name: {student.Name}");
-                        Console.WriteLine($"Student Grade: {student.grade}");
-                        Console.WriteLine($"Student Birthday: {student.Birthday.ToShortDateString()}");
-                        Console.WriteLine($"Student Age: {student.age}");
-                        foreach (var subject in student.marks)
+                Console.WriteLine("1.View All Students\n2.Filter by Grades");
+                Console.Write("Please select the option: ");
+                int viewOption = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine();
+                Student sView = new Student();
+                switch (viewOption)
+                {
+                    case 1:
+                        validOption = true;
+                        if (details.Count == 0)
                         {
-                            Console.WriteLine($"Student Marks for {subject.Key}: {subject.Value}");
+                            Console.WriteLine("There is no student registered!");
                         }
-                        Console.WriteLine($"Student Total Marks: {student.totalMarks}");
-                        Console.WriteLine($"Student Result: {student.result}");
-                        Console.WriteLine($"Student Distinctions: {student.distinctions}");
-                        Console.WriteLine();
-                    }
-                    break;
-                case 2:
-                    char filterField;
-                    Console.Write("Please insert the grade that you want to see: ");
-                    int filterGrade = Convert.ToInt32(Console.ReadLine());
-                    switch (filterGrade)
-                    {
-                        case 1:
-                            student.viewStudents(details,"1");
-                            break;
-                        case 2:
-                            student.viewStudents(details, "2");
-                            break;
-                        case 3:
-                            student.viewStudents(details, "3");
-                            break;
-                        case 4:
-                            student.viewStudents(details, "4");
-                            break;
-                        case 5:
-                            student.viewStudents(details, "5");
-                            break;
-                        case 6:
-                            student.viewStudents(details, "6");
-                            break;
-                        case 7:
-                            student.viewStudents(details, "7");
-                            break;
-                        case 8:
-                            student.viewStudents(details, "8");
-                            break;
-                        case 9:
-                            Console.WriteLine("Choose Biology or Economics by inserting B/E: ");
-                            filterField = Convert.ToChar(Console.ReadLine());
-                            if (filterField == 'B')
+                        foreach (Student student in details)
+                        {
+                            Console.WriteLine($"Student Name: {student.Name}");
+                            Console.WriteLine($"Student Grade: {student.grade}");
+                            Console.WriteLine($"Student Birthday: {student.Birthday.ToShortDateString()}");
+                            Console.WriteLine($"Student Age: {student.age}");
+                            foreach (var subject in student.marks)
                             {
-                                student.viewStudents(details, "9B");
-                                break;
+                                Console.WriteLine($"Student Marks for {subject.Key}: {subject.Value}");
                             }
-                            else if (filterField == 'E')
-                            {
-                                student.viewStudents(details, "9E");
+                            Console.WriteLine($"Student Total Marks: {student.totalMarks}");
+                            Console.WriteLine($"Student Result: {student.result}");
+                            Console.WriteLine($"Student Distinctions: {student.distinctions}");
+                            Console.WriteLine();
+                        }
+                        break;
+                    case 2:
+                        validOption = true;
+                        char filterField;
+                        Console.Write("Please insert the grade that you want to see: ");
+                        int filterGrade = Convert.ToInt32(Console.ReadLine());
+                        switch (filterGrade)
+                        {
+                            case 1:
+                                sView.viewStudents(details, "1");
                                 break;
-                            }
-                            else
-                            {
-                                Console.WriteLine("Invalid Input!");
-                                displayStudent(details);
+                            case 2:
+                                sView.viewStudents(details, "2");
                                 break;
-                            }
-                        case 10:
-                            Console.WriteLine("Choose Biology or Economics by inserting B/E: ");
-                            filterField = Convert.ToChar(Console.ReadLine());
-                            if (filterField == 'B')
-                            {
-                                student.viewStudents(details, "10B");
+                            case 3:
+                                sView.viewStudents(details, "3");
                                 break;
-                            }
-                            else if (filterField == 'E')
-                            {
-                                student.viewStudents(details, "10E");
+                            case 4:
+                                sView.viewStudents(details, "4");
                                 break;
-                            }
-                            else
-                            {
-                                Console.WriteLine("Invalid Input!");
-                                displayStudent(details);
+                            case 5:
+                                sView.viewStudents(details, "5");
                                 break;
-                            }
-                    }
-                    break;
+                            case 6:
+                                sView.viewStudents(details, "6");
+                                break;
+                            case 7:
+                                sView.viewStudents(details, "7");
+                                break;
+                            case 8:
+                                sView.viewStudents(details, "8");
+                                break;
+                            case 9:
+                                Console.WriteLine("Choose Biology or Economics by inserting B/E: ");
+                                filterField = Convert.ToChar(Console.ReadLine());
+                                if (filterField == 'B')
+                                {
+                                    sView.viewStudents(details, "9B");
+                                    break;
+                                }
+                                else if (filterField == 'E')
+                                {
+                                    sView.viewStudents(details, "9E");
+                                    break;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("\nInvalid Input!\n");
+                                    validOption = false;
+                                    break;
+                                }
+                            case 10:
+                                Console.WriteLine("Choose Biology or Economics by inserting B/E: ");
+                                filterField = Convert.ToChar(Console.ReadLine());
+                                if (filterField == 'B')
+                                {
+                                    sView.viewStudents(details, "10B");
+                                    break;
+                                }
+                                else if (filterField == 'E')
+                                {
+                                    sView.viewStudents(details, "10E");
+                                    break;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("\nInvalid Input!\n");
+                                    validOption = false;
+                                    break;
+                                }
+                            default:
+                                Console.WriteLine("\nInvalid Input!\n");
+                                validOption = false;
+                                break;
+                        }
+                        break;
+                    default:
+                        Console.WriteLine("\nInvalid Input!\n");
+                        validOption = false;
+                        break;
+                }
             }
         }
         public void viewStudents(List<Student> sDetails, string studentGradeFilter)
         {
             List<Student> filteredStudents = new List<Student>();
-            Console.Write(string.Format("{0,-20} {1,-12} {2,-5} {3,-7}", "Name", "Birthday", "Age", "Grade"));
-            foreach (var subject in studentGrading.gradeSubjects[studentGradeFilter])
-            {
-                Console.Write($"{subject,-16}");
-            }
-            Console.WriteLine(string.Format("{0,-12} {1,-8} {2,-14}", "Total Marks", "Results", "Distinctions"));
+            
             foreach (Student student in sDetails)
             {
                 if (student.grade == studentGradeFilter)
                 {
-
                     filteredStudents.Add(student);
                 }
             }
+            Console.Write(string.Format("{0,-20} {1,-12} {2,-5} {3,-7}", "Name", "Birthday", "Age", "Grade"));
+            foreach (var subject in filteredStudents[0].marks.Keys)
+            {
+                Console.Write($"{subject,-16}");
+            }
+            Console.WriteLine(string.Format("{0,-12} {1,-8} {2,-14}", "Total Marks", "Results", "Distinctions"));
             if (filteredStudents.Count > 0)
             {
                 foreach (Student student in filteredStudents)
