@@ -10,6 +10,8 @@ namespace TEST
 {
     public class Student
     {
+        StudentGrading studentGrading = new StudentGrading();
+        
         public string Name { get; private set; }
         public DateTime Birthday { get; private set; }
         public int age { get; private set; }
@@ -59,6 +61,7 @@ namespace TEST
         }
         public (DateTime bday, int stuage) askBirthday()
         {
+            //birthday
             int stuage = 0;
             bool ageValid = true;
             DateTime bday = DateTime.Now;
@@ -138,8 +141,9 @@ namespace TEST
             }
             CreateStudent(studentName, bday, stuage, studGrade, studentMarks);
         }
-        public void insertStudent()
+        public void insertStudent(List<Student> studentInfo)
         {
+            studentGrading.SubjectGrading();
             char field;
             Student student = new Student();
             Console.Write("Please insert Student's Grade Number: ");
@@ -148,35 +152,35 @@ namespace TEST
             switch (grade)
             {
                 case 1:
-                    student.getStudentInfo("1", Program.studentGrading.gradeSubjects["1"]);
+                    student.getStudentInfo("1", studentGrading.gradeSubjects["1"]);
                     Program.students.Add(student);
                     break;
                 case 2:
-                    student.getStudentInfo("2", Program.studentGrading.gradeSubjects["2"]);
+                    student.getStudentInfo("2", studentGrading.gradeSubjects["2"]);
                     Program.students.Add(student);
                     break;
                 case 3:
-                    student.getStudentInfo("3", Program.studentGrading.gradeSubjects["3"]);
+                    student.getStudentInfo("3", studentGrading.gradeSubjects["3"]);
                     Program.students.Add(student);
                     break;
                 case 4:
-                    student.getStudentInfo("4", Program.studentGrading.gradeSubjects["4"]);
+                    student.getStudentInfo("4", studentGrading.gradeSubjects["4"]);
                     Program.students.Add(student);
                     break;
                 case 5:
-                    student.getStudentInfo("5", Program.studentGrading.gradeSubjects["5"]);
+                    student.getStudentInfo("5", studentGrading.gradeSubjects["5"]);
                     Program.students.Add(student);
                     break;
                 case 6:
-                    student.getStudentInfo("6", Program.studentGrading.gradeSubjects["6"]);
+                    student.getStudentInfo("6", studentGrading.gradeSubjects["6"]);
                     Program.students.Add(student);
                     break;
                 case 7:
-                    student.getStudentInfo("7", Program.studentGrading.gradeSubjects["7"]);
+                    student.getStudentInfo("7", studentGrading.gradeSubjects["7"]);
                     Program.students.Add(student);
                     break;
                 case 8:
-                    student.getStudentInfo("8", Program.studentGrading.gradeSubjects["8"]);
+                    student.getStudentInfo("8", studentGrading.gradeSubjects["8"]);
                     Program.students.Add(student);
                     break;
                 case 9:
@@ -184,13 +188,13 @@ namespace TEST
                     field = Convert.ToChar(Console.ReadLine());
                     if (field == 'B')
                     {
-                        student.getStudentInfo("9B", Program.studentGrading.gradeSubjects["9B"]);
+                        student.getStudentInfo("9B", studentGrading.gradeSubjects["9B"]);
                         Program.students.Add(student);
                         break;
                     }
                     else if (field == 'E')
                     {
-                        student.getStudentInfo("9E", Program.studentGrading.gradeSubjects["9E"]);
+                        student.getStudentInfo("9E", studentGrading.gradeSubjects["9E"]);
                         Program.students.Add(student);
                         break;
                     }
@@ -205,13 +209,13 @@ namespace TEST
                     field = Convert.ToChar(Console.ReadLine());
                     if (field == 'B')
                     {
-                        student.getStudentInfo("10B", Program.studentGrading.gradeSubjects["10B"]);
+                        student.getStudentInfo("10B", studentGrading.gradeSubjects["10B"]);
                         Program.students.Add(student);
                         break;
                     }
                     else if (field == 'E')
                     {
-                        student.getStudentInfo("10E", Program.studentGrading.gradeSubjects["10E"]);
+                        student.getStudentInfo("10E", studentGrading.gradeSubjects["10E"]);
                         Program.students.Add(student);
                         break;
                     }
@@ -329,7 +333,7 @@ namespace TEST
         {
             List<Student> filteredStudents = new List<Student>();
             Console.Write(string.Format("{0,-20} {1,-12} {2,-5} {3,-7}", "Name", "Birthday", "Age", "Grade"));
-            foreach (var subject in Program.studentGrading.gradeSubjects[studentGradeFilter])
+            foreach (var subject in studentGrading.gradeSubjects[studentGradeFilter])
             {
                 Console.Write($"{subject,-16}");
             }

@@ -13,12 +13,12 @@ namespace TEST
 {
     public class Program
     {
-        public static StudentGrading studentGrading = new StudentGrading();
-        public static List<Student> students = new List<Student>();
+        //public static StudentGrading studentGrading = new StudentGrading();
+        public List<Student> students = new List<Student>();
 
         static void Main(string[] args)
         {
-            studentGrading.SubjectGrading();
+            //studentGrading.SubjectGrading();
 
             Console.WriteLine("============================================");
             Console.WriteLine("|| Welcome to Student Registration System ||");
@@ -30,7 +30,6 @@ namespace TEST
         static void MainMenu()
         {
             int perform;
-            Student s = new Student();
             Console.WriteLine();
             Console.WriteLine("Please select option that you want to perform: \n1.Register Students\n2.View registered students\n3.Exit");
             perform = Convert.ToInt32(Console.ReadLine());
@@ -41,7 +40,7 @@ namespace TEST
                 Console.WriteLine("Please select option that you want to perform: \n1.Register Students\n2.View registered students\n3.Exit");
                 perform = Convert.ToInt32(Console.ReadLine());
             }
-            //Student student = new Student();
+            Student student = new Student();
             switch (perform)
             {
                 case 1:
@@ -50,7 +49,7 @@ namespace TEST
                     Console.WriteLine("| Register New Students |");
                     Console.WriteLine(" =======================");
                     Console.WriteLine();
-                    s.insertStudent();
+                    student.insertStudent(students);
                     MainMenu();
                     break;
                 case 2:
@@ -59,7 +58,7 @@ namespace TEST
                     Console.WriteLine("| View Registered Students |");
                     Console.WriteLine(" ==========================");
                     Console.WriteLine();
-                    s.displayStudent();
+                    student.displayStudent();
                     MainMenu();
                     break;
                 case 3:
