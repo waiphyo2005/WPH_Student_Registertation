@@ -10,13 +10,14 @@ namespace TEST
 {
     public class Student
     {   
+        public int Id { get; protected set; }
         public string Name { get; private set; }
         public DateTime Birthday { get; private set; }
         public int age { get; private set; }
         public string grade { get; private set; }
         public Dictionary<string, double> marks { get; private set; }
         public double totalMarks { get; private set; }
-        public int distinctions { get; private set; }
+        public int distinctions { get; protected set; }
         public string result { get; private set; }
         public double findTotalMarks()
         {
@@ -392,6 +393,26 @@ namespace TEST
     }
     public class Primary: Student
     {
-        public override 
+        public override int countDistinctions()
+        {
+            if (result == "Fail")
+            {
+                distinctions = 0;
+                return distinctions;
+            }
+            else
+            {
+                distinctions = 0;
+
+                foreach (var mark in marks.Values)
+                {
+                    if (mark > 80)
+                    {
+                        distinctions++;
+                    }
+                }
+                return distinctions;
+            }
+        }
     }
 }
