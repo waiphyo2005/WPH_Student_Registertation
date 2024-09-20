@@ -10,53 +10,53 @@ namespace TEST
 {
     public class Student
     {
-        public string Name { get; private set; }
-        public DateTime Birthday { get; private set; }
-        public int age { get; private set; }
-        public string grade { get; private set; }
-        public Dictionary<string, double> marks { get; private set; }
-        public double totalMarks { get; private set; }
-        public int distinctions { get; protected set; }
-        public string result { get; private set; }
-        public double findTotalMarks()
-        {
-            totalMarks = marks.Values.Sum();
-            return totalMarks;
-        }
-        public string resultCheck()
-        {
-            foreach (var mark in marks.Values)
-            {
-                if (mark < 40)
-                {
-                    result = "Fail";
-                    return result;
-                }
-            }
-            result = "Pass";
-            return result;
-        }
-        public int countDistinctions()
-        {
-            if (result == "Fail")
-            {
-                distinctions = 0;
-                return distinctions;
-            }
-            else
-            {
-                distinctions = 0;
+        public string Name { get; protected set; }
+        public DateTime Birthday { get; protected set; }
+        public int age { get; protected set; }
+        public string grade { get; protected set; }
+        //public Dictionary<string, double> marks { get; private set; }
+        //public double totalMarks { get; private set; }
+        //public int distinctions { get; protected set; }
+        public string result { get; protected set; }
+        //public double findTotalMarks()
+        //{
+        //    totalMarks = marks.Values.Sum();
+        //    return totalMarks;
+        //}
+        //public virtual string resultCheck()
+        //{
+        //    foreach (var mark in marks.Values)
+        //    {
+        //        if (mark < 40)
+        //        {
+        //            result = "Fail";
+        //            return result;
+        //        }
+        //    }
+        //    result = "Pass";
+        //    return result;
+        //}
+        //public int countDistinctions()
+        //{
+        //    if (result == "Fail")
+        //    {
+        //        distinctions = 0;
+        //        return distinctions;
+        //    }
+        //    else
+        //    {
+        //        distinctions = 0;
 
-                foreach (var mark in marks.Values)
-                {
-                    if (mark > 80)
-                    {
-                        distinctions++;
-                    }
-                }
-                return distinctions;
-            }
-        }
+        //        foreach (var mark in marks.Values)
+        //        {
+        //            if (mark > 80)
+        //            {
+        //                distinctions++;
+        //            }
+        //        }
+        //        return distinctions;
+        //    }
+        //}
         public (DateTime bday, int stuage) askBirthday()
         {
             int stuage = 0;
@@ -91,16 +91,12 @@ namespace TEST
             } while (!ageValid);
             return (bday, stuage);
         }
-        public void CreateStudent(string studName, DateTime studBirthday, int studAge, string studgrade, Dictionary<string, double> studmarks)
+        public virtual void CreateStudent(string studName, DateTime studBirthday, int studAge, string studgrade)
         {
             Name = studName;
             Birthday = studBirthday;
             age = studAge;
-            marks = studmarks;
             grade = studgrade;
-            findTotalMarks();
-            resultCheck();
-            countDistinctions();
         }
 
         public virtual void getStudentInfo(string studGrade, List<string> subjects)
@@ -122,21 +118,21 @@ namespace TEST
             //birthday
             (DateTime bday, int stuage) = askBirthday();
 
-            //marks
-            Dictionary<string, double> studentMarks = new Dictionary<string, double>();
-            for (int i = 0; i < subjects.Count; i++)
-            {
-                Console.Write($"Insert marks for {subjects[i]}: ");
-                double sMarks = Convert.ToDouble(Console.ReadLine());
-                while (sMarks < 0 || sMarks > 100)
-                {
-                    Console.WriteLine("\nInvalid Input! Please insert proper marks (0 to 100)!\n");
-                    Console.Write($"Please Insert the marks of {subjects[i]}: ");
-                    sMarks = Convert.ToDouble(Console.ReadLine());
-                }
-                studentMarks.Add(subjects[i], sMarks);
-            }
-            CreateStudent(studentName, bday, stuage, studGrade, studentMarks);
+            ////marks
+            //Dictionary<string, double> studentMarks = new Dictionary<string, double>();
+            //for (int i = 0; i < subjects.Count; i++)
+            //{
+            //    Console.Write($"Insert marks for {subjects[i]}: ");
+            //    double sMarks = Convert.ToDouble(Console.ReadLine());
+            //    while (sMarks < 0 || sMarks > 100)
+            //    {
+            //        Console.WriteLine("\nInvalid Input! Please insert proper marks (0 to 100)!\n");
+            //        Console.Write($"Please Insert the marks of {subjects[i]}: ");
+            //        sMarks = Convert.ToDouble(Console.ReadLine());
+            //    }
+            //    studentMarks.Add(subjects[i], sMarks);
+            //}
+            CreateStudent(studentName, bday, stuage, studGrade)
         }
         public Student insertStudent(Dictionary<string, List<string>> gradeSubjects)
         {
@@ -404,6 +400,65 @@ namespace TEST
     }
     public class Primary: Student
     {
+        public Dictionary <string, string> marks { get; private set; }
+        public override void CreateStudent(string studName, DateTime studBirthday, int studAge, string studgrade, Dictionary<string, string> studmarks)
+        {
+            Name = studName;
+            Birthday = studBirthday;
+            age = studAge;
+            marks = studmarks;
+            grade = studgrade;
+            marks = studmarks;
+            resultCheck();
+        }
+        public string resultCheck()
+        {
+            foreach (var mark in marks.Values)
+            {
+                if (mark == "Fail")
+                {
+                    result = "Fail";
+                    return result;
+                }
+            }
+            result = "Pass";
+            return result;
+        }
+        public override void getStudentInfo(string studGrade, List<string> subjects)
+        {
+            //name
+            string phrase = @"^[a-zA-Z ]+$";
+            Console.Write("Enter Student's Name: ");
+            string studentName = Console.ReadLine();
+            bool nameValid = Regex.IsMatch(studentName, phrase);
+
+            while (!nameValid)
+            {
+                Console.WriteLine("\nInvalid Input! Please insert a proper name!\n");
+                Console.Write("Enter Student's Name: ");
+                studentName = Console.ReadLine();
+                nameValid = Regex.IsMatch(studentName, phrase);
+            }
+
+            //birthday
+            (DateTime bday, int stuage) = askBirthday();
+
+            //marks
+            Dictionary<string, string> studentMarks = new Dictionary<string, string>();
+            for (int i = 0; i < subjects.Count; i++)
+            {
+                Console.Write($"Insert marks for {subjects[i]}(Pass or Fail): ");
+                string sMarks = Console.ReadLine();
+                while (sMarks != "Pass" || sMarks != "Fail")
+                {
+                    Console.WriteLine("\nInvalid Input! Please insert proper marks (0 to 100)!\n");
+                    Console.Write($"Please Insert the marks of {subjects[i]}: ");
+                    sMarks = Console.ReadLine();
+                }
+                studentMarks.Add(subjects[i], sMarks);
+            }
+            CreateStudent(studentName, bday, stuage, studGrade, studentMarks);
+        }
         public override void viewStudents(List<Student> sDetails, string studentGradeFilter)
         {
             List<Student> filteredStudents = new List<Student>();
@@ -434,6 +489,65 @@ namespace TEST
     }
     public class Secondary : Student
     {
+        public Dictionary<string, char> marks { get; private set; }
+        public override void CreateStudent(string studName, DateTime studBirthday, int studAge, string studgrade, Dictionary<string, char> studmarks)
+        {
+            Name = studName;
+            Birthday = studBirthday;
+            age = studAge;
+            marks = studmarks;
+            grade = studgrade;
+            marks = studmarks;
+            resultCheck();
+        }
+        public string resultCheck()
+        {
+            foreach (var mark in marks.Values)
+            {
+                if (mark == 'F')
+                {
+                    result = "Fail";
+                    return result;
+                }
+            }
+            result = "Pass";
+            return result;
+        }
+        public override void getStudentInfo(string studGrade, List<string> subjects)
+        {
+            //name
+            string phrase = @"^[a-zA-Z ]+$";
+            Console.Write("Enter Student's Name: ");
+            string studentName = Console.ReadLine();
+            bool nameValid = Regex.IsMatch(studentName, phrase);
+
+            while (!nameValid)
+            {
+                Console.WriteLine("\nInvalid Input! Please insert a proper name!\n");
+                Console.Write("Enter Student's Name: ");
+                studentName = Console.ReadLine();
+                nameValid = Regex.IsMatch(studentName, phrase);
+            }
+
+            //birthday
+            (DateTime bday, int stuage) = askBirthday();
+
+            //marks
+            Dictionary<string, char> studentMarks = new Dictionary<string, char>();
+            for (int i = 0; i < subjects.Count; i++)
+            {
+                Console.Write($"Insert marks for {subjects[i]}(A, B, C, D, F): ");
+                char sMarks = Convert.ToChar(Console.ReadLine());
+                while (sMarks != 'A' || sMarks != 'B' || sMarks != 'C' || sMarks != 'D' || sMarks != 'F')
+                {
+                    Console.WriteLine("\nInvalid Input! Please insert proper marks (0 to 100)!\n");
+                    Console.Write($"Please Insert the marks of {subjects[i]}: ");
+                    sMarks = Convert.ToChar(Console.ReadLine());
+                }
+                studentMarks.Add(subjects[i], sMarks);
+            }
+            CreateStudent(studentName, bday, stuage, studGrade, studentMarks);
+        }
         public override void viewStudents(List<Student> sDetails, string studentGradeFilter)
         {
             List<Student> filteredStudents = new List<Student>();
@@ -447,6 +561,10 @@ namespace TEST
             }
             Console.WriteLine();
             Console.Write(string.Format("{0,-20} {1,-12} {2,-5} {3,-7}", "Name", "Birthday", "Age", "Grade"));
+            foreach (var subject in filteredStudents[0].marks.Keys)
+            {
+                Console.Write($"{subject,-16}");
+            }
             Console.WriteLine(string.Format("{0,-8} {1,-14}", "Results", "Distinctions"));
             if (filteredStudents.Count > 0)
             {
