@@ -9,8 +9,7 @@ using System.Threading.Tasks;
 namespace TEST
 {
     public class Student
-    {   
-        public int Id { get; protected set; }
+    {
         public string Name { get; private set; }
         public DateTime Birthday { get; private set; }
         public int age { get; private set; }
@@ -37,7 +36,7 @@ namespace TEST
             result = "Pass";
             return result;
         }
-        public virtual int countDistinctions()
+        public int countDistinctions()
         {
             if (result == "Fail")
             {
@@ -104,7 +103,7 @@ namespace TEST
             countDistinctions();
         }
 
-        public void getStudentInfo(string studGrade, List<string> subjects)
+        public virtual void getStudentInfo(string studGrade, List<string> subjects)
         {
             //name
             string phrase = @"^[a-zA-Z ]+$";
@@ -242,7 +241,7 @@ namespace TEST
                 Console.Write("Please select the option: ");
                 int viewOption = Convert.ToInt32(Console.ReadLine());
                 Console.WriteLine();
-                Student sView = new Student();
+                
                 switch (viewOption)
                 {
                     case 1:
@@ -281,40 +280,50 @@ namespace TEST
                         switch (filterGrade)
                         {
                             case 1:
-                                sView.viewStudents(details, "1");
+                                Student sP1 = new Primary();
+                                sP1.viewStudents(details, "1");
                                 break;
                             case 2:
-                                sView.viewStudents(details, "2");
+                                Student sP2 = new Primary();
+                                sP2.viewStudents(details, "2");
                                 break;
                             case 3:
-                                sView.viewStudents(details, "3");
+                                Student sP3 = new Primary();
+                                sP3.viewStudents(details, "3");
                                 break;
                             case 4:
-                                sView.viewStudents(details, "4");
+                                Student sP4 = new Primary();
+                                sP4.viewStudents(details, "4");
                                 break;
                             case 5:
-                                sView.viewStudents(details, "5");
+                                Student sP5 = new Secondary();
+                                sP5.viewStudents(details, "5");
                                 break;
                             case 6:
-                                sView.viewStudents(details, "6");
+                                Student sP6 = new Secondary();
+                                sP6.viewStudents(details, "6");
                                 break;
                             case 7:
-                                sView.viewStudents(details, "7");
+                                Student sP7 = new Secondary();
+                                sP7.viewStudents(details, "7");
                                 break;
                             case 8:
-                                sView.viewStudents(details, "8");
+                                Student sP8 = new Secondary();
+                                sP8.viewStudents(details, "8");
                                 break;
                             case 9:
                                 Console.WriteLine("Choose Biology or Economics by inserting B/E: ");
                                 filterField = Convert.ToChar(Console.ReadLine());
                                 if (filterField == 'B')
                                 {
-                                    sView.viewStudents(details, "9B");
+                                    Student sP9B = new HighSchool();
+                                    sP9B.viewStudents(details, "9B");
                                     break;
                                 }
                                 else if (filterField == 'E')
                                 {
-                                    sView.viewStudents(details, "9E");
+                                    Student sP9E = new HighSchool();
+                                    sP9E.viewStudents(details, "9E");
                                     break;
                                 }
                                 else
@@ -328,12 +337,14 @@ namespace TEST
                                 filterField = Convert.ToChar(Console.ReadLine());
                                 if (filterField == 'B')
                                 {
-                                    sView.viewStudents(details, "10B");
+                                    Student sP10B = new HighSchool();
+                                    sP10B.viewStudents(details, "10B");
                                     break;
                                 }
                                 else if (filterField == 'E')
                                 {
-                                    sView.viewStudents(details, "10E");
+                                    Student sP10E = new HighSchool();
+                                    sP10E.viewStudents(details, "10E");
                                     break;
                                 }
                                 else
@@ -355,7 +366,7 @@ namespace TEST
                 }
             }
         }
-        public void viewStudents(List<Student> sDetails, string studentGradeFilter)
+        public virtual void viewStudents(List<Student> sDetails, string studentGradeFilter)
         {
             List<Student> filteredStudents = new List<Student>();
             
@@ -393,25 +404,99 @@ namespace TEST
     }
     public class Primary: Student
     {
-        public override int countDistinctions()
+        public override void viewStudents(List<Student> sDetails, string studentGradeFilter)
         {
-            if (result == "Fail")
+            List<Student> filteredStudents = new List<Student>();
+
+            foreach (Student student in sDetails)
             {
-                distinctions = 0;
-                return distinctions;
+                if (student.grade == studentGradeFilter)
+                {
+                    filteredStudents.Add(student);
+                }
+            }
+            Console.WriteLine();
+            Console.Write(string.Format("{0,-20} {1,-12} {2,-5} {3,-7}", "Name", "Birthday", "Age", "Grade"));
+            Console.WriteLine(string.Format("{0,-8}", "Results"));
+            if (filteredStudents.Count > 0)
+            {
+                foreach (Student student in filteredStudents)
+                {
+                    Console.Write($"{student.Name,-20} {student.Birthday.ToShortDateString(),-12} {student.age,-5} {student.grade,-7}");
+                    Console.WriteLine($"{student.result,-8}");
+                }
             }
             else
             {
-                distinctions = 0;
+                Console.WriteLine("There is no registered students in this grade!");
+            }
+        }
+    }
+    public class Secondary : Student
+    {
+        public override void viewStudents(List<Student> sDetails, string studentGradeFilter)
+        {
+            List<Student> filteredStudents = new List<Student>();
 
-                foreach (var mark in marks.Values)
+            foreach (Student student in sDetails)
+            {
+                if (student.grade == studentGradeFilter)
                 {
-                    if (mark > 80)
-                    {
-                        distinctions++;
-                    }
+                    filteredStudents.Add(student);
                 }
-                return distinctions;
+            }
+            Console.WriteLine();
+            Console.Write(string.Format("{0,-20} {1,-12} {2,-5} {3,-7}", "Name", "Birthday", "Age", "Grade"));
+            Console.WriteLine(string.Format("{0,-8} {1,-14}", "Results", "Distinctions"));
+            if (filteredStudents.Count > 0)
+            {
+                foreach (Student student in filteredStudents)
+                {
+                    Console.Write($"{student.Name,-20} {student.Birthday.ToShortDateString(),-12} {student.age,-5} {student.grade,-7}");
+                    Console.WriteLine($"{student.result,-8} {student.distinctions,-14}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("There is no registered students in this grade!");
+            }
+        }
+    }
+    public class HighSchool : Student
+    {
+        public virtual void viewStudents(List<Student> sDetails, string studentGradeFilter)
+        {
+            List<Student> filteredStudents = new List<Student>();
+
+            foreach (Student student in sDetails)
+            {
+                if (student.grade == studentGradeFilter)
+                {
+                    filteredStudents.Add(student);
+                }
+            }
+            Console.WriteLine();
+            Console.Write(string.Format("{0,-20} {1,-12} {2,-5} {3,-7}", "Name", "Birthday", "Age", "Grade"));
+            foreach (var subject in filteredStudents[0].marks.Keys)
+            {
+                Console.Write($"{subject,-16}");
+            }
+            Console.WriteLine(string.Format("{0,-12} {1,-8} {2,-14}", "Total Marks", "Results", "Distinctions"));
+            if (filteredStudents.Count > 0)
+            {
+                foreach (Student student in filteredStudents)
+                {
+                    Console.Write($"{student.Name,-20} {student.Birthday.ToShortDateString(),-12} {student.age,-5} {student.grade,-7}");
+                    foreach (double mark in student.marks.Values)
+                    {
+                        Console.Write($"{mark,-16}");
+                    }
+                    Console.WriteLine($"{student.totalMarks,-12} {student.result,-8} {student.distinctions,-14}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("There is no registered students in this grade!");
             }
         }
     }
