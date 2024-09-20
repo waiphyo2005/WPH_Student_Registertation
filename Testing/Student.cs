@@ -18,11 +18,15 @@ namespace TEST
         public double totalMarks { get; private set; }
         public int distinctions { get; private set; }
         public string result { get; private set; }
+
+        //----return method for returning the value of total marks---\\
         public double findTotalMarks()
         {
             totalMarks = marks.Values.Sum();
             return totalMarks;
         }
+
+        //----return method for checking whether student pass or fail and returning the value of result----\\
         public string resultCheck()
         {
             foreach (var mark in marks.Values)
@@ -36,6 +40,9 @@ namespace TEST
             result = "Pass";
             return result;
         }
+
+        //----return method to count distinctions and return the value of total disctions----\\
+        //----if the student fails any of the subjects, distinction will be set to zero----\\
         public int countDistinctions()
         {
             if (result == "Fail")
@@ -57,6 +64,13 @@ namespace TEST
                 return distinctions;
             }
         }
+
+        //----return method to ask user to input birthday, validate birthday, calculate age, validate age and retrun both values of birthday and age----\\
+        //----validate birthday input using Regex----\\
+        //----convert string input to DateTime----\\
+        //----calculate age and check if its below 5 or greater than 120----\\
+        //----loops the mthod until both validation are passed----\\
+        //----return both birthday and age at the same time----\\
         public (DateTime bday, int stuage) askBirthday()
         {
             int stuage = 0;
@@ -91,6 +105,8 @@ namespace TEST
             } while (!ageValid);
             return (bday, stuage);
         }
+
+        //----method for creating a student object with all student details----\\
         public void CreateStudent(string studName, DateTime studBirthday, int studAge, string studgrade, Dictionary<string, double> studmarks)
         {
             Name = studName;
@@ -103,6 +119,11 @@ namespace TEST
             countDistinctions();
         }
 
+        //----method for asking user input for student details----\\
+        //----ask student name and validate name using Regex----\\
+        //----call askBirthday method for dirthday and age----\\
+        //----ask student marks according to each subject, validate marks and storing in Dictionary----\\
+        //----call the CreateStudent method to create student obj with all user inserted details----\\
         public void getStudentInfo(string studGrade, List<string> subjects)
         {
             //name
@@ -138,6 +159,10 @@ namespace TEST
             }
             CreateStudent(studentName, bday, stuage, studGrade, studentMarks);
         }
+
+        //----return method for returing the student object with all values stored to main----\\
+        //----calls the getStudentInfo method to ask for user input and create student object----\\
+        //----returns the student object with all details stored----\\
         public Student insertStudent(Dictionary<string, List<string>> gradeSubjects)
         {
             char field;
@@ -232,6 +257,11 @@ namespace TEST
             }
             return student;
         }
+
+        //----method to display students----\\
+        //----accessing the registered student list from Main through parimeter----\\
+        //----two options to view: All students or students from each grade----\\
+        //----if its second option, will call viewStudents----\\
         public void displayStudent(List<Student> details)
         {
             bool validOption = false;
@@ -354,6 +384,12 @@ namespace TEST
                 }
             }
         }
+
+        //----method to display registered student according to grades----\\
+        //----access the registered student list from Main via the perimeter and also get the grade want to view from perimeter----\\
+        //----first check the registered student list for student that grade matches the perimeter and store those in a filteredStudents list----\\
+        //----subject for same grade students will be same so only print out the subjects from first student----\\
+        //----then prints out the full student details----\\
         public void viewStudents(List<Student> sDetails, string studentGradeFilter)
         {
             List<Student> filteredStudents = new List<Student>();

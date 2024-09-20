@@ -16,7 +16,10 @@ namespace TEST
 
         static void Main(string[] args)
         {
+            //----declare list to store registered students----\\
             List<Student> studentDetails = new List<Student>();
+
+            //----initialize data for grades and subjects-----\\
             StudentGrading studentGrading = new StudentGrading();
             studentGrading.SubjectGrading();
 
@@ -38,8 +41,14 @@ namespace TEST
                         Console.WriteLine("| Register New Students |");
                         Console.WriteLine(" =======================");
                         Console.WriteLine();
+                        //----building student object----\\
                         Student s = new Student();
+
+                        //----using return method to store student info inside student object return the object----\\
+                        //----gradeSuubjects Dictionary is set as perimeter to get the list of subjects according to grades----\\
                         s = s.insertStudent(studentGrading.gradeSubjects);
+
+                        //----inserting student object into registered students list----\\
                         studentDetails.Add(s);
                         Console.WriteLine("\nStudent Registered Successfully.");
                         again = false;
@@ -50,7 +59,11 @@ namespace TEST
                         Console.WriteLine("| View Registered Students |");
                         Console.WriteLine(" ==========================");
                         Console.WriteLine();
+                        //----building student object to access displayStudent method----\\
                         Student student = new Student();
+
+                        //----Calling displayStudent method to view registered students----\\
+                        //----Registered Student List is set as perimeter for the method from student class to access the list in Main----\\
                         student.displayStudent(studentDetails);
                         again = false;
                         break;
