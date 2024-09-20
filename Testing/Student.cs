@@ -9,13 +9,7 @@ using System.Threading.Tasks;
 namespace TEST
 {
     public class Student
-    {
-        //StudentGrading studentGrading = new StudentGrading();
-        //public void initializeSubjects()
-        //{
-        //    studentGrading.SubjectGrading();
-        //}
-        
+    {   
         public string Name { get; private set; }
         public DateTime Birthday { get; private set; }
         public int age { get; private set; }
@@ -255,7 +249,13 @@ namespace TEST
                         if (details.Count == 0)
                         {
                             Console.WriteLine("There is no student registered!");
+                            break;
                         }
+                        Console.WriteLine();
+                        Console.WriteLine(" =========================");
+                        Console.WriteLine("| All Registered Students |");
+                        Console.WriteLine(" =========================");
+                        Console.WriteLine();
                         foreach (Student student in details)
                         {
                             Console.WriteLine($"Student Name: {student.Name}");
@@ -365,6 +365,7 @@ namespace TEST
                     filteredStudents.Add(student);
                 }
             }
+            Console.WriteLine();
             Console.Write(string.Format("{0,-20} {1,-12} {2,-5} {3,-7}", "Name", "Birthday", "Age", "Grade"));
             foreach (var subject in filteredStudents[0].marks.Keys)
             {
