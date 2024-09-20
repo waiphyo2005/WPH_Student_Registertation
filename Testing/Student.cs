@@ -36,7 +36,7 @@ namespace TEST
             result = "Pass";
             return result;
         }
-        public int countDistinctions()
+        public virtual int countDistinctions()
         {
             if (result == "Fail")
             {
@@ -389,5 +389,9 @@ namespace TEST
                 Console.WriteLine("There is no registered students in this grade!");
             }
         }
+    }
+    public class Primary: Student
+    {
+        public override 
     }
 }
