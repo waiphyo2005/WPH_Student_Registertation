@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace TEST
+namespace Testing
 {
     public class Student
     {
@@ -91,14 +91,20 @@ namespace TEST
             } while (!ageValid);
             return (bday, stuage);
         }
-        public virtual void CreateStudent(string studName, DateTime studBirthday, int studAge, string studgrade)
+        public Student()
+        {
+            Name = null;
+            Birthday = DateTime.MinValue;
+            age = 0;
+            grade = null;
+        }
+        public Student(string studName, DateTime studBirthday, int studAge, string studgrade)
         {
             Name = studName;
             Birthday = studBirthday;
             age = studAge;
             grade = studgrade;
         }
-
         public virtual void getStudentInfo(string studGrade, List<string> subjects)
         {
             //name
@@ -118,21 +124,7 @@ namespace TEST
             //birthday
             (DateTime bday, int stuage) = askBirthday();
 
-            ////marks
-            //Dictionary<string, double> studentMarks = new Dictionary<string, double>();
-            //for (int i = 0; i < subjects.Count; i++)
-            //{
-            //    Console.Write($"Insert marks for {subjects[i]}: ");
-            //    double sMarks = Convert.ToDouble(Console.ReadLine());
-            //    while (sMarks < 0 || sMarks > 100)
-            //    {
-            //        Console.WriteLine("\nInvalid Input! Please insert proper marks (0 to 100)!\n");
-            //        Console.Write($"Please Insert the marks of {subjects[i]}: ");
-            //        sMarks = Convert.ToDouble(Console.ReadLine());
-            //    }
-            //    studentMarks.Add(subjects[i], sMarks);
-            //}
-            CreateStudent(studentName, bday, stuage, studGrade)
+            Student student = new Student(studentName, bday, stuage, studGrade);
         }
         public Student insertStudent(Dictionary<string, List<string>> gradeSubjects)
         {
@@ -401,14 +393,20 @@ namespace TEST
     public class Primary: Student
     {
         public Dictionary <string, string> marks { get; private set; }
-        public override void CreateStudent(string studName, DateTime studBirthday, int studAge, string studgrade, Dictionary<string, string> studmarks)
+        //public override void CreateStudent(string studName, DateTime studBirthday, int studAge, string studgrade, Dictionary<string, string> studmarks)
+        //{
+        //    Name = studName;
+        //    Birthday = studBirthday;
+        //    age = studAge;
+        //    marks = studmarks;
+        //    grade = studgrade;
+        //    marks = studmarks;
+        //    resultCheck();
+        //}
+        public Primary(string studName, DateTime studBirthday, int studAge, string studGrade, Dictionary<string, string> studMarks)
+        : base(studName, studBirthday, studAge, studGrade)
         {
-            Name = studName;
-            Birthday = studBirthday;
-            age = studAge;
-            marks = studmarks;
-            grade = studgrade;
-            marks = studmarks;
+            marks = studMarks;
             resultCheck();
         }
         public string resultCheck()
