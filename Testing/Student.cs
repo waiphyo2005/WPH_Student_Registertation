@@ -18,10 +18,10 @@ namespace Testing
 
         public Student()
         {
-            Name = string.Empty;
+            Name = null;
             Birthday = DateTime.MinValue;
             Age = 0;
-            Grade = string.Empty;
+            Grade = null;
         }
         protected virtual void GetStudentInfo(string studGrade, List<string> subjects)
         {
@@ -31,52 +31,58 @@ namespace Testing
         }
         private string AskName()
         {
-            string phrase = @"^[a-zA-Z ]+$";
-            Console.Write("\nEnter Student's Name: ");
-            string studentName = Console.ReadLine();
-            bool nameValid = Regex.IsMatch(studentName, phrase);
-
-            while (!nameValid)
+            bool isNameValid = false;
+            string studentName = null;
+            while (!isNameValid)
             {
-                Console.WriteLine("\nInvalid Input! Please insert a proper name!\n");
-                Console.Write("Enter Student's Name: ");
+                string phrase = @"^[a-zA-Z ]+$";
+                Console.Write("\nEnter Student's Name: ");
                 studentName = Console.ReadLine();
-                nameValid = Regex.IsMatch(studentName, phrase);
+                bool checkName = Regex.IsMatch(studentName, phrase);
+                if (checkName == false)
+                {
+                    Console.WriteLine("\nInvalid Input! Please insert a proper name!\n");
+                    break;
+                }
+                isNameValid = true;
             }
             return studentName;
         }
         private (DateTime, int) AskBirthday()
         {
             int studentAge = 0;
-            bool isAgeValid = true;
+            bool isAgeValid = false;
             DateTime studentBirthday = DateTime.Now;
-            do
+            while (!isAgeValid)
             {
-                string datePattern = @"^(0[1-9]|1[0-2])/([0-2][0-9]|3[01])/\d{4}$";
-                Console.Write("Enter Student's Birthday(MM/DD/YYYY): ");
-                string sBirthday = Console.ReadLine();
-                bool isBirthdayValid = Regex.IsMatch(sBirthday, datePattern);
-                while (!isBirthdayValid)
+                bool isBirthdayInputValid = false;
+                while (!isBirthdayInputValid)
                 {
-                    Console.WriteLine("Incorrect Format or Invalid Birthday! Please insert again!");
                     Console.Write("Enter Student's Birthday(MM/DD/YYYY): ");
-                    sBirthday = Console.ReadLine();
-                    isBirthdayValid = Regex.IsMatch(sBirthday, datePattern);
-                }
-                DateTime studBirthday = DateTime.Parse(sBirthday);
-                int studAge = DateTime.Now.Year - studBirthday.Year;
-                if (studAge < 5 || studAge > 120)
-                {
-                    Console.WriteLine("Invalid Birthday");
-                    isAgeValid = false;
-                }
-                else
-                {
-                    isAgeValid = true;
-                    studentAge = studAge;
-                    studentBirthday = studBirthday;
-                }
-            } while (!isAgeValid);
+                    string sBirthday = Console.ReadLine();
+                    bool isBirthdayValid = DateTime.TryParse(sBirthday, out studentBirthday);
+                    if (isBirthdayValid == true)
+                    {
+                        isBirthdayInputValid = true;
+                        DateTime studBirthday = DateTime.Parse(sBirthday);
+                        int studAge = DateTime.Now.Year - studBirthday.Year;
+                        if (studAge < 5 || studAge > 120)
+                        {
+                            Console.WriteLine("Invalid Birthday!");
+                        }
+                        else
+                        {
+                            isAgeValid = true;
+                            studentAge = studAge;
+                            studentBirthday = studBirthday;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid Birthday Input Format! Please insert againin this fromat (MM/DD/YYYY)!");
+                    }
+                }                
+            }
             return (studentBirthday, studentAge);
         }
         public virtual void DisplayStudent()
@@ -96,7 +102,7 @@ namespace Testing
         public ElementarySchool() : base()
         {
             Marks = new Dictionary<string, string>();
-            Result = string.Empty;
+            Result = null;
         }
         public ElementarySchool InsertStudent(Dictionary<string, List<string>> gradeSubjects)
         {
@@ -196,7 +202,7 @@ namespace Testing
         public MiddleSchool() : base()
         {
             Marks = new Dictionary<string, char>();
-            Result = string.Empty;
+            Result = null;
         }
         public MiddleSchool InsertStudent(Dictionary<string, List<string>> gradeSubjects)
         {
@@ -299,7 +305,7 @@ namespace Testing
         public HighSchool() : base()
         {
             Marks = new Dictionary<string, double>();
-            Result = string.Empty;
+            Result = null;
             TotalMarks = 0;
             Distinctions = 0;
         }
