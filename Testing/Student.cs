@@ -10,26 +10,26 @@ namespace Testing
 {
     public class Student
     {
-        public string name { get; private set; }
-        public DateTime birthday { get; private set; }
-        public int age { get; private set; }
-        public string grade { get; private set; }
-        public string result { get; protected set; }
+        public string Name { get; private set; }
+        public DateTime Birthday { get; private set; }
+        public int Age { get; private set; }
+        public string Grade { get; private set; }
+        public string Result { get; protected set; }
 
         public Student()
         {
-            name = string.Empty;
-            birthday = DateTime.MinValue;
-            age = 0;
-            grade = string.Empty;
+            Name = string.Empty;
+            Birthday = DateTime.MinValue;
+            Age = 0;
+            Grade = string.Empty;
         }
-        protected virtual void getStudentInfo(string studGrade, List<string> subjects)
+        protected virtual void GetStudentInfo(string studGrade, List<string> subjects)
         {
-            name = askName();
-            (birthday, age) = askBirthday();
-            grade = studGrade;
+            Name = AskName();
+            (Birthday, Age) = AskBirthday();
+            Grade = studGrade;
         }
-        private string askName()
+        private string AskName()
         {
             string phrase = @"^[a-zA-Z ]+$";
             Console.Write("\nEnter Student's Name: ");
@@ -45,46 +45,46 @@ namespace Testing
             }
             return studentName;
         }
-        private (DateTime, int) askBirthday()
+        private (DateTime, int) AskBirthday()
         {
-            int stuage = 0;
-            bool ageValid = true;
-            DateTime bday = DateTime.Now;
+            int studentAge = 0;
+            bool isAgeValid = true;
+            DateTime studentBirthday = DateTime.Now;
             do
             {
-                string datepattern = @"^(0[1-9]|1[0-2])/([0-2][0-9]|3[01])/\d{4}$";
+                string datePattern = @"^(0[1-9]|1[0-2])/([0-2][0-9]|3[01])/\d{4}$";
                 Console.Write("Enter Student's Birthday(MM/DD/YYYY): ");
-                string studentBirthday = Console.ReadLine();
-                bool bdayValid = Regex.IsMatch(studentBirthday, datepattern);
-                while (!bdayValid)
+                string sBirthday = Console.ReadLine();
+                bool isBirthdayValid = Regex.IsMatch(sBirthday, datePattern);
+                while (!isBirthdayValid)
                 {
                     Console.WriteLine("Incorrect Format or Invalid Birthday! Please insert again!");
                     Console.Write("Enter Student's Birthday(MM/DD/YYYY): ");
-                    studentBirthday = Console.ReadLine();
-                    bdayValid = Regex.IsMatch(studentBirthday, datepattern);
+                    sBirthday = Console.ReadLine();
+                    isBirthdayValid = Regex.IsMatch(sBirthday, datePattern);
                 }
-                DateTime sBday = DateTime.Parse(studentBirthday);
-                int sAge = DateTime.Now.Year - sBday.Year;
-                if (sAge < 5 || sAge > 120)
+                DateTime studBirthday = DateTime.Parse(sBirthday);
+                int studAge = DateTime.Now.Year - studBirthday.Year;
+                if (studAge < 5 || studAge > 120)
                 {
                     Console.WriteLine("Invalid Birthday");
-                    ageValid = false;
+                    isAgeValid = false;
                 }
                 else
                 {
-                    ageValid = true;
-                    stuage = sAge;
-                    bday = sBday;
+                    isAgeValid = true;
+                    studentAge = studAge;
+                    studentBirthday = studBirthday;
                 }
-            } while (!ageValid);
-            return (bday, stuage);
+            } while (!isAgeValid);
+            return (studentBirthday, studentAge);
         }
-        public virtual void displayStudent()
+        public virtual void DisplayStudent()
         {
-            Console.WriteLine($"Student Name: {name}");
-            Console.WriteLine($"Student Grade: {grade}");
-            Console.WriteLine($"Student Birthday: {birthday.ToShortDateString()}");
-            Console.WriteLine($"Student Age: {age}");
+            Console.WriteLine($"Student Name: {Name}");
+            Console.WriteLine($"Student Grade: {Grade}");
+            Console.WriteLine($"Student Birthday: {Birthday.ToShortDateString()}");
+            Console.WriteLine($"Student Age: {Age}");
         }
     }
 
@@ -92,40 +92,40 @@ namespace Testing
     public class ElementarySchool : Student
     {
 
-        public Dictionary<string, string> marks { get; private set; }
+        public Dictionary<string, string> Marks { get; private set; }
         public ElementarySchool() : base()
         {
-            marks = new Dictionary<string, string>();
-            result = string.Empty;
+            Marks = new Dictionary<string, string>();
+            Result = string.Empty;
         }
-        public ElementarySchool insertStudent(Dictionary<string, List<string>> gradeSubjects)
+        public ElementarySchool InsertStudent(Dictionary<string, List<string>> gradeSubjects)
         {
-            bool validGrade = false;
+            bool isGradeValid = false;
             ElementarySchool eStudent = new ElementarySchool();
-            while (!validGrade)
+            while (!isGradeValid)
             {
                 Console.WriteLine("\nPlease choose Elementary School Student's Grade:\n1.Grade 1\n2.Grade 2\n3.Grade 3\n4.Grade 4");
                 int grade = Convert.ToInt32(Console.ReadLine());
                 switch (grade)
                 {
                     case 1:
-                        validGrade = true;
-                        eStudent.getStudentInfo("1", gradeSubjects["1"]);
+                        isGradeValid = true;
+                        eStudent.GetStudentInfo("1", gradeSubjects["1"]);
                         break;
                     case 2:
 
-                        validGrade = true;
-                        eStudent.getStudentInfo("2", gradeSubjects["2"]);
+                        isGradeValid = true;
+                        eStudent.GetStudentInfo("2", gradeSubjects["2"]);
                         break;
                     case 3:
 
-                        validGrade = true;
-                        eStudent.getStudentInfo("3", gradeSubjects["3"]);
+                        isGradeValid = true;
+                        eStudent.GetStudentInfo("3", gradeSubjects["3"]);
                         break;
                     case 4:
 
-                        validGrade = true;
-                        eStudent.getStudentInfo("4", gradeSubjects["4"]);
+                        isGradeValid = true;
+                        eStudent.GetStudentInfo("4", gradeSubjects["4"]);
                         break;
                     default:
                         Console.WriteLine("\nInvalid Input!\n");
@@ -134,26 +134,26 @@ namespace Testing
             }
             return eStudent;
         }
-        protected override void getStudentInfo(string studGrade, List<string> subjects)
+        protected override void GetStudentInfo(string studGrade, List<string> subjects)
         {
-            base.getStudentInfo(studGrade, subjects);
-            marks = askMarks(studGrade, subjects);
-            result = checkResult(marks);
+            base.GetStudentInfo(studGrade, subjects);
+            Marks = AskMarks(studGrade, subjects);
+            Result = CheckResult(Marks);
         }
-        private Dictionary<string, string> askMarks(string studGrade, List<string> subjects)
+        private Dictionary<string, string> AskMarks(string studGrade, List<string> subjects)
         {
             Dictionary<string, string> studMarks = new Dictionary<string, string>();
             for (int i = 0; i < subjects.Count; i++)
             {
-                bool validMarks = false;
+                bool isMarksValid = false;
                 string sMarks;
-                while (!validMarks)
+                while (!isMarksValid)
                 {
                     Console.Write($"Insert marks for {subjects[i]}(\"Pass\" or \"Fail\"): ");
                     sMarks = Console.ReadLine();
                     if (sMarks == "Pass" || sMarks == "Fail")
                     {
-                        validMarks = true;
+                        isMarksValid = true;
                         studMarks.Add(subjects[i], sMarks);
                     }
                     else
@@ -164,7 +164,7 @@ namespace Testing
             }
             return studMarks;
         }
-        private string checkResult(Dictionary<string, string> studMarks)
+        private string CheckResult(Dictionary<string, string> studMarks)
         {
             string studResults;
             foreach (var mark in studMarks.Values)
@@ -178,54 +178,53 @@ namespace Testing
             studResults = "Pass";
             return studResults;
         }
-        public override void displayStudent()
+        public override void DisplayStudent()
         {
-            base.displayStudent();
-            foreach (var subject in marks)
+            base.DisplayStudent();
+            foreach (var subject in Marks)
             {
                 Console.WriteLine($"Student Marks for {subject.Key}: {subject.Value}");
             }
-            Console.WriteLine($"Student Results: {result}");
+            Console.WriteLine($"Student Results: {Result}");
         }
     }
 
     //MIDDLE SCHOOL STUDENTS
     public class MiddleSchool : Student
     {
-        public Dictionary<string, char> marks { get; private set; }
+        public Dictionary<string, char> Marks { get; private set; }
         public MiddleSchool() : base()
         {
-            marks = new Dictionary<string, char>();
-            result = string.Empty;
+            Marks = new Dictionary<string, char>();
+            Result = string.Empty;
         }
-        public MiddleSchool insertStudent(Dictionary<string, List<string>> gradeSubjects)
+        public MiddleSchool InsertStudent(Dictionary<string, List<string>> gradeSubjects)
         {
-            bool validGrade = false;
+            bool isGradeValid = false;
             MiddleSchool mStudent = new MiddleSchool();
-            while (!validGrade)
+            while (!isGradeValid)
             {
                 Console.WriteLine("\nPlease choose Middle School Student's Grade:\n1.Grade 5\n2.Grade 6\n3.Grade 7\n4.Grade 8");
                 int grade = Convert.ToInt32(Console.ReadLine());
                 switch (grade)
                 {
                     case 1:
-                        validGrade = true;
-                        mStudent.getStudentInfo("5", gradeSubjects["5"]);
+                        isGradeValid = true;
+                        mStudent.GetStudentInfo("5", gradeSubjects["5"]);
                         break;
                     case 2:
 
-                        validGrade = true;
-                        mStudent.getStudentInfo("6", gradeSubjects["6"]);
+                        isGradeValid = true;
+                        mStudent.GetStudentInfo("6", gradeSubjects["6"]);
                         break;
                     case 3:
-
-                        validGrade = true;
-                        mStudent.getStudentInfo("7", gradeSubjects["7"]);
+                        isGradeValid = true;
+                        mStudent.GetStudentInfo("7", gradeSubjects["7"]);
                         break;
                     case 4:
 
-                        validGrade = true;
-                        mStudent.getStudentInfo("8", gradeSubjects["8"]);
+                        isGradeValid = true;
+                        mStudent.GetStudentInfo("8", gradeSubjects["8"]);
                         break;
                     default:
                         Console.WriteLine("\nInvalid Input!\n");
@@ -234,26 +233,27 @@ namespace Testing
             }
             return mStudent;
         }
-        protected override void getStudentInfo(string studGrade, List<string> subjects)
+        protected override void GetStudentInfo(string studGrade, List<string> subjects)
         {
-            base.getStudentInfo(studGrade, subjects);
-            marks = askMarks(studGrade, subjects);
-            result = checkResult(marks);
+            base.GetStudentInfo(studGrade, subjects);
+            Marks = AskMarks(studGrade, subjects);
+            Result = CheckResult(Marks);
         }
-        private Dictionary<string, char> askMarks(string studGrade, List<string> subjects)
+        private Dictionary<string, char> AskMarks(string studGrade, List<string> subjects)
         {
             Dictionary<string, char> studMarks = new Dictionary<string, char>();
             for (int i = 0; i < subjects.Count; i++)
             {
-                bool validMarks = false;
+                bool isMarksValid = false;
                 char sMarks;
-                while (!validMarks)
+                while (!isMarksValid)
                 {
                     Console.Write($"Insert marks for {subjects[i]}(\"A\", \"B\", \"C\", \"D\", \"F\"): ");
                     sMarks = Convert.ToChar(Console.ReadLine());
+                    char.ToUpper(sMarks);
                     if (sMarks == 'A' || sMarks == 'B' || sMarks == 'C' || sMarks == 'D' || sMarks == 'F')
                     {
-                        validMarks = true;
+                        isMarksValid = true;
                         studMarks.Add(subjects[i], sMarks);
                     }
                     else
@@ -264,7 +264,7 @@ namespace Testing
             }
             return studMarks;
         }
-        private string checkResult(Dictionary<string, char> studMarks)
+        private string CheckResult(Dictionary<string, char> studMarks)
         {
             string studResults;
             foreach (var mark in studMarks.Values)
@@ -278,32 +278,32 @@ namespace Testing
             studResults = "Pass";
             return studResults;
         }
-        public override void displayStudent()
+        public override void DisplayStudent()
         {
-            base.displayStudent();
-            foreach (var subject in marks)
+            base.DisplayStudent();
+            foreach (var subject in Marks)
             {
                 Console.WriteLine($"Student Marks for {subject.Key}: {subject.Value}");
             }
-            Console.WriteLine($"Student Results: {result}");
+            Console.WriteLine($"Student Results: {Result}");
         }
     }
 
     //HIGH SCHOOL STUDENTS
     public class HighSchool : Student
     {
-        public Dictionary<string, double> marks { get; private set; }
-        public double totalMarks { get; private set; }
-        public int distinctions { get; private set; }
+        public Dictionary<string, double> Marks { get; private set; }
+        public double TotalMarks { get; private set; }
+        public int Distinctions { get; private set; }
 
         public HighSchool() : base()
         {
-            marks = new Dictionary<string, double>();
-            result = string.Empty;
-            totalMarks = 0;
-            distinctions = 0;
+            Marks = new Dictionary<string, double>();
+            Result = string.Empty;
+            TotalMarks = 0;
+            Distinctions = 0;
         }
-        public HighSchool insertStudent(Dictionary<string, List<string>> gradeSubjects)
+        public HighSchool InsertStudent(Dictionary<string, List<string>> gradeSubjects)
         {
             bool validGrade = false;
             HighSchool hStudent = new HighSchool();
@@ -315,22 +315,22 @@ namespace Testing
                 {
                     case 1:
                         validGrade = true;
-                        hStudent.getStudentInfo("9S", gradeSubjects["9S"]);
+                        hStudent.GetStudentInfo("9S", gradeSubjects["9S"]);
                         break;
                     case 2:
 
                         validGrade = true;
-                        hStudent.getStudentInfo("9A", gradeSubjects["9A"]);
+                        hStudent.GetStudentInfo("9A", gradeSubjects["9A"]);
                         break;
                     case 3:
 
                         validGrade = true;
-                        hStudent.getStudentInfo("10S", gradeSubjects["10S"]);
+                        hStudent.GetStudentInfo("10S", gradeSubjects["10S"]);
                         break;
                     case 4:
 
                         validGrade = true;
-                        hStudent.getStudentInfo("10A", gradeSubjects["10A"]);
+                        hStudent.GetStudentInfo("10A", gradeSubjects["10A"]);
                         break;
                     default:
                         Console.WriteLine("\nInvalid Input!\n");
@@ -339,29 +339,29 @@ namespace Testing
             }
             return hStudent;
         }
-        protected override void getStudentInfo(string studGrade, List<string> subjects)
+        protected override void GetStudentInfo(string studGrade, List<string> subjects)
         {
-            base.getStudentInfo(studGrade, subjects);
-            marks = askMarks(studGrade, subjects);
-            result = checkResult(marks);
-            totalMarks = calculateTotalMarks(marks);
-            distinctions = countDistinctions(marks);
+            base.GetStudentInfo(studGrade, subjects);
+            Marks = AskMarks(studGrade, subjects);
+            Result = CheckResult(Marks);
+            TotalMarks = CalculateTotalMarks(Marks);
+            Distinctions = CountDistinctions(Marks);
 
         }
-        private Dictionary<string, double> askMarks(string studGrade, List<string> subjects)
+        private Dictionary<string, double> AskMarks(string studGrade, List<string> subjects)
         {
             Dictionary<string, double> studMarks = new Dictionary<string, double>();
             for (int i = 0; i < subjects.Count; i++)
             {
-                bool validMarks = false;
+                bool isMarksValid = false;
                 double sMarks;
-                while (!validMarks)
+                while (!isMarksValid)
                 {
                     Console.Write($"Insert marks for {subjects[i]}(0 - 100): ");
                     sMarks = Convert.ToDouble(Console.ReadLine());
                     if (sMarks >= 0 || sMarks <= 100)
                     {
-                        validMarks = true;
+                        isMarksValid = true;
                         studMarks.Add(subjects[i], sMarks);
                     }
                     else
@@ -372,7 +372,7 @@ namespace Testing
             }
             return studMarks;
         }
-        private string checkResult(Dictionary<string, double> studMarks)
+        private string CheckResult(Dictionary<string, double> studMarks)
         {
             string studResults;
             foreach (var mark in studMarks.Values)
@@ -386,12 +386,12 @@ namespace Testing
             studResults = "Pass";
             return studResults;
         }
-        private double calculateTotalMarks(Dictionary<string, double> studMarks)
+        private double CalculateTotalMarks(Dictionary<string, double> studMarks)
         {
             double studTotalMarks = studMarks.Values.Sum();
             return studTotalMarks;
         }
-        private int countDistinctions(Dictionary<string, double> studMarks)
+        private int CountDistinctions(Dictionary<string, double> studMarks)
         {
             int studDistinctions = 0;
             foreach (var mark in studMarks.Values)
@@ -408,16 +408,16 @@ namespace Testing
             }
             return studDistinctions;
         }
-        public override void displayStudent()
+        public override void DisplayStudent()
         {
-            base.displayStudent();
-            foreach (var subject in marks)
+            base.DisplayStudent();
+            foreach (var subject in Marks)
             {
                 Console.WriteLine($"Student Marks for {subject.Key}: {subject.Value}");
             }
-            Console.WriteLine($"Student Results: {result}");
-            Console.WriteLine($"Student Total Marks: {totalMarks}");
-            Console.WriteLine($"Student Distinctions: {distinctions}");
+            Console.WriteLine($"Student Results: {Result}");
+            Console.WriteLine($"Student Total Marks: {TotalMarks}");
+            Console.WriteLine($"Student Distinctions: {Distinctions}");
         }
     }
 }

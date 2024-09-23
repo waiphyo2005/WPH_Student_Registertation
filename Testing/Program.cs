@@ -16,16 +16,16 @@ namespace Testing
 
         static void Main(string[] args)
         {
-            List<Student> studentDetails = new List<Student>();
-            StudentGrading studentGrading = new StudentGrading();
-            studentGrading.SubjectGrading();
+            List<Student> StudentDetails = new List<Student>();
+            StudentGrading StudentGrading = new StudentGrading();
+            StudentGrading.SubjectGrading();
 
             Console.WriteLine("============================================");
             Console.WriteLine("|| Welcome to Student Registration System ||");
             Console.WriteLine("============================================");
             Console.WriteLine();
-            bool again = false;
-            while (!again)
+            bool isEnding = false;
+            while (!isEnding)
             {
                 int perform;
                 Console.WriteLine("\nPlease select option that you want to perform: \n1.Register Students\n2.View registered students\n3.Exit");
@@ -38,32 +38,32 @@ namespace Testing
                         Console.WriteLine("| Register New Students |");
                         Console.WriteLine(" =======================");
                         Console.WriteLine();
-                        bool choiceValid = false;
-                        while (!choiceValid)
+                        bool isValidChoice = false;
+                        while (!isValidChoice)
                         {
                             Console.WriteLine("\nPlease select the standard that you want to register:\n1.Elimentary School\n2.Middle School\n3.High School");
                             int choice = Convert.ToInt32(Console.ReadLine());
                             switch (choice)
                             {
                                 case 1:
-                                    choiceValid = true;
+                                    isValidChoice = true;
                                     ElementarySchool elementaryStudent = new ElementarySchool();
-                                    elementaryStudent = elementaryStudent.insertStudent(studentGrading.gradeSubjects);
-                                    studentDetails.Add(elementaryStudent);
+                                    elementaryStudent = elementaryStudent.InsertStudent(StudentGrading.gradeSubjects);
+                                    StudentDetails.Add(elementaryStudent);
                                     Console.WriteLine("\nStudent Registered Successfully.");
                                     break;
                                 case 2:
-                                    choiceValid = true;
+                                    isValidChoice = true;
                                     MiddleSchool middleStudent = new MiddleSchool();
-                                    middleStudent = middleStudent.insertStudent(studentGrading.gradeSubjects);
-                                    studentDetails.Add(middleStudent);
+                                    middleStudent = middleStudent.InsertStudent(StudentGrading.gradeSubjects);
+                                    StudentDetails.Add(middleStudent);
                                     Console.WriteLine("\nStudent Registered Successfully.");
                                     break;
                                 case 3:
-                                    choiceValid = true;
+                                    isValidChoice = true;
                                     HighSchool highStudent = new HighSchool();
-                                    highStudent = highStudent.insertStudent(studentGrading.gradeSubjects);
-                                    studentDetails.Add(highStudent);
+                                    highStudent = highStudent.InsertStudent(StudentGrading.gradeSubjects);
+                                    StudentDetails.Add(highStudent);
                                     Console.WriteLine("\nStudent Registered Successfully.");
                                     break;
                                 default:
@@ -79,14 +79,14 @@ namespace Testing
                         Console.WriteLine(" ==========================");
                         Console.WriteLine();
                         Student s = new Student();
-                        foreach (var student in studentDetails)
+                        foreach (var student in StudentDetails)
                         {
-                            student.displayStudent();
+                            student.DisplayStudent();
                             Console.WriteLine();
                         }
                         break;
                     case 3:
-                        again = true;
+                        isEnding = true;
                         Console.WriteLine("Thank you for using the system!");
                         break;
                     default:
