@@ -38,11 +38,39 @@ namespace Testing
                         Console.WriteLine("| Register New Students |");
                         Console.WriteLine(" =======================");
                         Console.WriteLine();
-                        Student s = new Student();
-                        s = s.insertStudent(studentGrading.gradeSubjects);
-                        studentDetails.Add(s);
-                        Console.WriteLine("\nStudent Registered Successfully.");
-                        again = false;
+                        bool choiceValid = false;
+                        while (!choiceValid)
+                        {
+                            Console.WriteLine("\nPlease select the standard that you want to register:\n1.Elimentary School\n2.Middle School\n3.High School");
+                            int choice = Convert.ToInt32(Console.ReadLine());
+                            switch (choice)
+                            {
+                                case 1:
+                                    choiceValid = true;
+                                    ElementarySchool elementaryStudent = new ElementarySchool();
+                                    elementaryStudent = elementaryStudent.insertStudent(studentGrading.gradeSubjects);
+                                    studentDetails.Add(elementaryStudent);
+                                    Console.WriteLine("\nStudent Registered Successfully.");
+                                    break;
+                                case 2:
+                                    choiceValid = true;
+                                    MiddleSchool middleStudent = new MiddleSchool();
+                                    middleStudent = middleStudent.insertStudent(studentGrading.gradeSubjects);
+                                    studentDetails.Add(middleStudent);
+                                    Console.WriteLine("\nStudent Registered Successfully.");
+                                    break;
+                                case 3:
+                                    choiceValid = true;
+                                    HighSchool highStudent = new HighSchool();
+                                    highStudent = highStudent.insertStudent(studentGrading.gradeSubjects);
+                                    studentDetails.Add(highStudent);
+                                    Console.WriteLine("\nStudent Registered Successfully.");
+                                    break;
+                                default:
+                                    Console.WriteLine("Invalid Input!");
+                                    break;
+                            }
+                        }
                         break;
                     case 2:
                         Console.WriteLine();
@@ -50,9 +78,12 @@ namespace Testing
                         Console.WriteLine("| View Registered Students |");
                         Console.WriteLine(" ==========================");
                         Console.WriteLine();
-                        Student student = new Student();
-                        student.displayStudent(studentDetails);
-                        again = false;
+                        Student s = new Student();
+                        foreach (var student in studentDetails)
+                        {
+                            student.displayStudent();
+                            Console.WriteLine();
+                        }
                         break;
                     case 3:
                         again = true;
@@ -60,7 +91,6 @@ namespace Testing
                         break;
                     default:
                         Console.WriteLine("Invalid Input!");
-                        again = false;
                         break;
                 }
             }

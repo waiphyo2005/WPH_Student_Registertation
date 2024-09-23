@@ -10,54 +10,42 @@ namespace Testing
 {
     public class Student
     {
-        public string Name { get; protected set; }
-        public DateTime Birthday { get; protected set; }
-        public int age { get; protected set; }
-        public string grade { get; protected set; }
-        //public Dictionary<string, double> marks { get; private set; }
-        //public double totalMarks { get; private set; }
-        //public int distinctions { get; protected set; }
+        public string name { get; private set; }
+        public DateTime birthday { get; private set; }
+        public int age { get; private set; }
+        public string grade { get; private set; }
         public string result { get; protected set; }
-        //public double findTotalMarks()
-        //{
-        //    totalMarks = marks.Values.Sum();
-        //    return totalMarks;
-        //}
-        //public virtual string resultCheck()
-        //{
-        //    foreach (var mark in marks.Values)
-        //    {
-        //        if (mark < 40)
-        //        {
-        //            result = "Fail";
-        //            return result;
-        //        }
-        //    }
-        //    result = "Pass";
-        //    return result;
-        //}
-        //public int countDistinctions()
-        //{
-        //    if (result == "Fail")
-        //    {
-        //        distinctions = 0;
-        //        return distinctions;
-        //    }
-        //    else
-        //    {
-        //        distinctions = 0;
 
-        //        foreach (var mark in marks.Values)
-        //        {
-        //            if (mark > 80)
-        //            {
-        //                distinctions++;
-        //            }
-        //        }
-        //        return distinctions;
-        //    }
-        //}
-        public (DateTime bday, int stuage) askBirthday()
+        public Student()
+        {
+            name = string.Empty;
+            birthday = DateTime.MinValue;
+            age = 0;
+            grade = string.Empty;
+        }
+        protected virtual void getStudentInfo(string studGrade, List<string> subjects)
+        {
+            name = askName();
+            (birthday, age) = askBirthday();
+            grade = studGrade;
+        }
+        private string askName()
+        {
+            string phrase = @"^[a-zA-Z ]+$";
+            Console.Write("\nEnter Student's Name: ");
+            string studentName = Console.ReadLine();
+            bool nameValid = Regex.IsMatch(studentName, phrase);
+
+            while (!nameValid)
+            {
+                Console.WriteLine("\nInvalid Input! Please insert a proper name!\n");
+                Console.Write("Enter Student's Name: ");
+                studentName = Console.ReadLine();
+                nameValid = Regex.IsMatch(studentName, phrase);
+            }
+            return studentName;
+        }
+        private (DateTime, int) askBirthday()
         {
             int stuage = 0;
             bool ageValid = true;
@@ -91,529 +79,345 @@ namespace Testing
             } while (!ageValid);
             return (bday, stuage);
         }
-        public Student()
+        public virtual void displayStudent()
         {
-            Name = null;
-            Birthday = DateTime.MinValue;
-            age = 0;
-            grade = null;
+            Console.WriteLine($"Student Name: {name}");
+            Console.WriteLine($"Student Grade: {grade}");
+            Console.WriteLine($"Student Birthday: {birthday.ToShortDateString()}");
+            Console.WriteLine($"Student Age: {age}");
         }
-        public Student(string studName, DateTime studBirthday, int studAge, string studgrade)
+    }
+
+    //ELEMENTARY SCHOOL STUDENTS
+    public class ElementarySchool : Student
+    {
+
+        public Dictionary<string, string> marks { get; private set; }
+        public ElementarySchool() : base()
         {
-            Name = studName;
-            Birthday = studBirthday;
-            age = studAge;
-            grade = studgrade;
+            marks = new Dictionary<string, string>();
+            result = string.Empty;
         }
-        public virtual void getStudentInfo(string studGrade, List<string> subjects)
+        public ElementarySchool insertStudent(Dictionary<string, List<string>> gradeSubjects)
         {
-            //name
-            string phrase = @"^[a-zA-Z ]+$";
-            Console.Write("Enter Student's Name: ");
-            string studentName = Console.ReadLine();
-            bool nameValid = Regex.IsMatch(studentName, phrase);
-
-            while (!nameValid)
-            {
-                Console.WriteLine("\nInvalid Input! Please insert a proper name!\n");
-                Console.Write("Enter Student's Name: ");
-                studentName = Console.ReadLine();
-                nameValid = Regex.IsMatch(studentName, phrase);
-            }
-
-            //birthday
-            (DateTime bday, int stuage) = askBirthday();
-
-            Student student = new Student(studentName, bday, stuage, studGrade);
-        }
-        public Student insertStudent(Dictionary<string, List<string>> gradeSubjects)
-        {
-            char field;
             bool validGrade = false;
-            Student student = new Student();
+            ElementarySchool eStudent = new ElementarySchool();
             while (!validGrade)
             {
-                Console.Write("Please insert Student's Grade Number: ");
+                Console.WriteLine("\nPlease choose Elementary School Student's Grade:\n1.Grade 1\n2.Grade 2\n3.Grade 3\n4.Grade 4");
                 int grade = Convert.ToInt32(Console.ReadLine());
                 switch (grade)
                 {
                     case 1:
                         validGrade = true;
-                        student.getStudentInfo("1", gradeSubjects["1"]);
+                        eStudent.getStudentInfo("1", gradeSubjects["1"]);
                         break;
                     case 2:
+
                         validGrade = true;
-                        student.getStudentInfo("2", gradeSubjects["2"]);
+                        eStudent.getStudentInfo("2", gradeSubjects["2"]);
                         break;
                     case 3:
+
                         validGrade = true;
-                        student.getStudentInfo("3", gradeSubjects["3"]);
+                        eStudent.getStudentInfo("3", gradeSubjects["3"]);
                         break;
                     case 4:
+
                         validGrade = true;
-                        student.getStudentInfo("4", gradeSubjects["4"]);
-                        break;
-                    case 5:
-                        validGrade = true;
-                        student.getStudentInfo("5", gradeSubjects["5"]);
-                        break;
-                    case 6:
-                        validGrade = true;
-                        student.getStudentInfo("6", gradeSubjects["6"]);
-                        break;
-                    case 7:
-                        validGrade = true;
-                        student.getStudentInfo("7", gradeSubjects["7"]);
-                        break;
-                    case 8:
-                        validGrade = true;
-                        student.getStudentInfo("8", gradeSubjects["8"]);
-                        break;
-                    case 9:
-                        validGrade = true;
-                        Console.WriteLine("Choose Biology or Economics by inserting B/E: ");
-                        field = Convert.ToChar(Console.ReadLine());
-                        if (field == 'B')
-                        {
-                            validGrade = true;
-                            student.getStudentInfo("9B", gradeSubjects["9B"]);
-                            break;
-                        }
-                        else if (field == 'E')
-                        {
-                            validGrade = true;
-                            student.getStudentInfo("9E", gradeSubjects["9E"]);
-                            break;
-                        }
-                        else
-                        {
-                            Console.WriteLine("\nInvalid Input!\n");
-                            validGrade= false;
-                            break;
-                        }
-                    case 10:
-                        Console.WriteLine("Choose Biology or Economics by inserting B/E: ");
-                        field = Convert.ToChar(Console.ReadLine());
-                        if (field == 'B')
-                        {
-                            validGrade = true;
-                            student.getStudentInfo("10B", gradeSubjects["10B"]);
-                            break;
-                        }
-                        else if (field == 'E')
-                        {
-                            validGrade = true;
-                            student.getStudentInfo("10E", gradeSubjects["10E"]);
-                            break;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Invalid Input!");
-                            validGrade = false;
-                            break;
-                        }
-                    default:
-                        Console.WriteLine("\nInvalid Input!\n");
-                        validGrade = false;
-                        break;
-                }
-            }
-            return student;
-        }
-        public void displayStudent(List<Student> details)
-        {
-            bool validOption = false;
-            while (!validOption)
-            {
-                Console.WriteLine("1.View All Students\n2.Filter by Grades");
-                Console.Write("Please select the option: ");
-                int viewOption = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine();
-                
-                switch (viewOption)
-                {
-                    case 1:
-                        validOption = true;
-                        if (details.Count == 0)
-                        {
-                            Console.WriteLine("There is no student registered!");
-                            break;
-                        }
-                        Console.WriteLine();
-                        Console.WriteLine(" =========================");
-                        Console.WriteLine("| All Registered Students |");
-                        Console.WriteLine(" =========================");
-                        Console.WriteLine();
-                        foreach (Student student in details)
-                        {
-                            Console.WriteLine($"Student Name: {student.Name}");
-                            Console.WriteLine($"Student Grade: {student.grade}");
-                            Console.WriteLine($"Student Birthday: {student.Birthday.ToShortDateString()}");
-                            Console.WriteLine($"Student Age: {student.age}");
-                            foreach (var subject in student.marks)
-                            {
-                                Console.WriteLine($"Student Marks for {subject.Key}: {subject.Value}");
-                            }
-                            Console.WriteLine($"Student Total Marks: {student.totalMarks}");
-                            Console.WriteLine($"Student Result: {student.result}");
-                            Console.WriteLine($"Student Distinctions: {student.distinctions}");
-                            Console.WriteLine();
-                        }
-                        break;
-                    case 2:
-                        validOption = true;
-                        char filterField;
-                        Console.Write("Please insert the grade that you want to see: ");
-                        int filterGrade = Convert.ToInt32(Console.ReadLine());
-                        switch (filterGrade)
-                        {
-                            case 1:
-                                Student sP1 = new Primary();
-                                sP1.viewStudents(details, "1");
-                                break;
-                            case 2:
-                                Student sP2 = new Primary();
-                                sP2.viewStudents(details, "2");
-                                break;
-                            case 3:
-                                Student sP3 = new Primary();
-                                sP3.viewStudents(details, "3");
-                                break;
-                            case 4:
-                                Student sP4 = new Primary();
-                                sP4.viewStudents(details, "4");
-                                break;
-                            case 5:
-                                Student sP5 = new Secondary();
-                                sP5.viewStudents(details, "5");
-                                break;
-                            case 6:
-                                Student sP6 = new Secondary();
-                                sP6.viewStudents(details, "6");
-                                break;
-                            case 7:
-                                Student sP7 = new Secondary();
-                                sP7.viewStudents(details, "7");
-                                break;
-                            case 8:
-                                Student sP8 = new Secondary();
-                                sP8.viewStudents(details, "8");
-                                break;
-                            case 9:
-                                Console.WriteLine("Choose Biology or Economics by inserting B/E: ");
-                                filterField = Convert.ToChar(Console.ReadLine());
-                                if (filterField == 'B')
-                                {
-                                    Student sP9B = new HighSchool();
-                                    sP9B.viewStudents(details, "9B");
-                                    break;
-                                }
-                                else if (filterField == 'E')
-                                {
-                                    Student sP9E = new HighSchool();
-                                    sP9E.viewStudents(details, "9E");
-                                    break;
-                                }
-                                else
-                                {
-                                    Console.WriteLine("\nInvalid Input!\n");
-                                    validOption = false;
-                                    break;
-                                }
-                            case 10:
-                                Console.WriteLine("Choose Biology or Economics by inserting B/E: ");
-                                filterField = Convert.ToChar(Console.ReadLine());
-                                if (filterField == 'B')
-                                {
-                                    Student sP10B = new HighSchool();
-                                    sP10B.viewStudents(details, "10B");
-                                    break;
-                                }
-                                else if (filterField == 'E')
-                                {
-                                    Student sP10E = new HighSchool();
-                                    sP10E.viewStudents(details, "10E");
-                                    break;
-                                }
-                                else
-                                {
-                                    Console.WriteLine("\nInvalid Input!\n");
-                                    validOption = false;
-                                    break;
-                                }
-                            default:
-                                Console.WriteLine("\nInvalid Input!\n");
-                                validOption = false;
-                                break;
-                        }
+                        eStudent.getStudentInfo("4", gradeSubjects["4"]);
                         break;
                     default:
                         Console.WriteLine("\nInvalid Input!\n");
-                        validOption = false;
                         break;
                 }
             }
+            return eStudent;
         }
-        public virtual void viewStudents(List<Student> sDetails, string studentGradeFilter)
+        protected override void getStudentInfo(string studGrade, List<string> subjects)
         {
-            List<Student> filteredStudents = new List<Student>();
-            
-            foreach (Student student in sDetails)
+            base.getStudentInfo(studGrade, subjects);
+            marks = askMarks(studGrade, subjects);
+            result = checkResult(marks);
+        }
+        private Dictionary<string, string> askMarks(string studGrade, List<string> subjects)
+        {
+            Dictionary<string, string> studMarks = new Dictionary<string, string>();
+            for (int i = 0; i < subjects.Count; i++)
             {
-                if (student.grade == studentGradeFilter)
+                bool validMarks = false;
+                string sMarks;
+                while (!validMarks)
                 {
-                    filteredStudents.Add(student);
-                }
-            }
-            Console.WriteLine();
-            Console.Write(string.Format("{0,-20} {1,-12} {2,-5} {3,-7}", "Name", "Birthday", "Age", "Grade"));
-            foreach (var subject in filteredStudents[0].marks.Keys)
-            {
-                Console.Write($"{subject,-16}");
-            }
-            Console.WriteLine(string.Format("{0,-12} {1,-8} {2,-14}", "Total Marks", "Results", "Distinctions"));
-            if (filteredStudents.Count > 0)
-            {
-                foreach (Student student in filteredStudents)
-                {
-                    Console.Write($"{student.Name,-20} {student.Birthday.ToShortDateString(),-12} {student.age,-5} {student.grade,-7}");
-                    foreach (double mark in student.marks.Values)
+                    Console.Write($"Insert marks for {subjects[i]}(\"Pass\" or \"Fail\"): ");
+                    sMarks = Console.ReadLine();
+                    if (sMarks == "Pass" || sMarks == "Fail")
                     {
-                        Console.Write($"{mark,-16}");
+                        validMarks = true;
+                        studMarks.Add(subjects[i], sMarks);
                     }
-                    Console.WriteLine($"{student.totalMarks,-12} {student.result,-8} {student.distinctions,-14}");
+                    else
+                    {
+                        Console.WriteLine("\nInvalid Input! Please insert proper marks (\"Pass\" or \"Fail\")!\n");
+                    }
                 }
             }
-            else
-            {
-                Console.WriteLine("There is no registered students in this grade!");
-            }
+            return studMarks;
         }
-    }
-    public class Primary: Student
-    {
-        public Dictionary <string, string> marks { get; private set; }
-        //public override void CreateStudent(string studName, DateTime studBirthday, int studAge, string studgrade, Dictionary<string, string> studmarks)
-        //{
-        //    Name = studName;
-        //    Birthday = studBirthday;
-        //    age = studAge;
-        //    marks = studmarks;
-        //    grade = studgrade;
-        //    marks = studmarks;
-        //    resultCheck();
-        //}
-        public Primary(string studName, DateTime studBirthday, int studAge, string studGrade, Dictionary<string, string> studMarks)
-        : base(studName, studBirthday, studAge, studGrade)
+        private string checkResult(Dictionary<string, string> studMarks)
         {
-            marks = studMarks;
-            resultCheck();
-        }
-        public string resultCheck()
-        {
-            foreach (var mark in marks.Values)
+            string studResults;
+            foreach (var mark in studMarks.Values)
             {
                 if (mark == "Fail")
                 {
-                    result = "Fail";
-                    return result;
+                    studResults = "Fail";
+                    return studResults;
                 }
             }
-            result = "Pass";
-            return result;
+            studResults = "Pass";
+            return studResults;
         }
-        public override void getStudentInfo(string studGrade, List<string> subjects)
+        public override void displayStudent()
         {
-            //name
-            string phrase = @"^[a-zA-Z ]+$";
-            Console.Write("Enter Student's Name: ");
-            string studentName = Console.ReadLine();
-            bool nameValid = Regex.IsMatch(studentName, phrase);
-
-            while (!nameValid)
+            base.displayStudent();
+            foreach (var subject in marks)
             {
-                Console.WriteLine("\nInvalid Input! Please insert a proper name!\n");
-                Console.Write("Enter Student's Name: ");
-                studentName = Console.ReadLine();
-                nameValid = Regex.IsMatch(studentName, phrase);
+                Console.WriteLine($"Student Marks for {subject.Key}: {subject.Value}");
             }
-
-            //birthday
-            (DateTime bday, int stuage) = askBirthday();
-
-            //marks
-            Dictionary<string, string> studentMarks = new Dictionary<string, string>();
-            for (int i = 0; i < subjects.Count; i++)
-            {
-                Console.Write($"Insert marks for {subjects[i]}(Pass or Fail): ");
-                string sMarks = Console.ReadLine();
-                while (sMarks != "Pass" || sMarks != "Fail")
-                {
-                    Console.WriteLine("\nInvalid Input! Please insert proper marks (0 to 100)!\n");
-                    Console.Write($"Please Insert the marks of {subjects[i]}: ");
-                    sMarks = Console.ReadLine();
-                }
-                studentMarks.Add(subjects[i], sMarks);
-            }
-            CreateStudent(studentName, bday, stuage, studGrade, studentMarks);
-        }
-        public override void viewStudents(List<Student> sDetails, string studentGradeFilter)
-        {
-            List<Student> filteredStudents = new List<Student>();
-
-            foreach (Student student in sDetails)
-            {
-                if (student.grade == studentGradeFilter)
-                {
-                    filteredStudents.Add(student);
-                }
-            }
-            Console.WriteLine();
-            Console.Write(string.Format("{0,-20} {1,-12} {2,-5} {3,-7}", "Name", "Birthday", "Age", "Grade"));
-            Console.WriteLine(string.Format("{0,-8}", "Results"));
-            if (filteredStudents.Count > 0)
-            {
-                foreach (Student student in filteredStudents)
-                {
-                    Console.Write($"{student.Name,-20} {student.Birthday.ToShortDateString(),-12} {student.age,-5} {student.grade,-7}");
-                    Console.WriteLine($"{student.result,-8}");
-                }
-            }
-            else
-            {
-                Console.WriteLine("There is no registered students in this grade!");
-            }
+            Console.WriteLine($"Student Results: {result}");
         }
     }
-    public class Secondary : Student
+
+    //MIDDLE SCHOOL STUDENTS
+    public class MiddleSchool : Student
     {
         public Dictionary<string, char> marks { get; private set; }
-        public override void CreateStudent(string studName, DateTime studBirthday, int studAge, string studgrade, Dictionary<string, char> studmarks)
+        public MiddleSchool() : base()
         {
-            Name = studName;
-            Birthday = studBirthday;
-            age = studAge;
-            marks = studmarks;
-            grade = studgrade;
-            marks = studmarks;
-            resultCheck();
+            marks = new Dictionary<string, char>();
+            result = string.Empty;
         }
-        public string resultCheck()
+        public MiddleSchool insertStudent(Dictionary<string, List<string>> gradeSubjects)
         {
-            foreach (var mark in marks.Values)
+            bool validGrade = false;
+            MiddleSchool mStudent = new MiddleSchool();
+            while (!validGrade)
+            {
+                Console.WriteLine("\nPlease choose Middle School Student's Grade:\n1.Grade 5\n2.Grade 6\n3.Grade 7\n4.Grade 8");
+                int grade = Convert.ToInt32(Console.ReadLine());
+                switch (grade)
+                {
+                    case 1:
+                        validGrade = true;
+                        mStudent.getStudentInfo("5", gradeSubjects["5"]);
+                        break;
+                    case 2:
+
+                        validGrade = true;
+                        mStudent.getStudentInfo("6", gradeSubjects["6"]);
+                        break;
+                    case 3:
+
+                        validGrade = true;
+                        mStudent.getStudentInfo("7", gradeSubjects["7"]);
+                        break;
+                    case 4:
+
+                        validGrade = true;
+                        mStudent.getStudentInfo("8", gradeSubjects["8"]);
+                        break;
+                    default:
+                        Console.WriteLine("\nInvalid Input!\n");
+                        break;
+                }
+            }
+            return mStudent;
+        }
+        protected override void getStudentInfo(string studGrade, List<string> subjects)
+        {
+            base.getStudentInfo(studGrade, subjects);
+            marks = askMarks(studGrade, subjects);
+            result = checkResult(marks);
+        }
+        private Dictionary<string, char> askMarks(string studGrade, List<string> subjects)
+        {
+            Dictionary<string, char> studMarks = new Dictionary<string, char>();
+            for (int i = 0; i < subjects.Count; i++)
+            {
+                bool validMarks = false;
+                char sMarks;
+                while (!validMarks)
+                {
+                    Console.Write($"Insert marks for {subjects[i]}(\"A\", \"B\", \"C\", \"D\", \"F\"): ");
+                    sMarks = Convert.ToChar(Console.ReadLine());
+                    if (sMarks == 'A' || sMarks == 'B' || sMarks == 'C' || sMarks == 'D' || sMarks == 'F')
+                    {
+                        validMarks = true;
+                        studMarks.Add(subjects[i], sMarks);
+                    }
+                    else
+                    {
+                        Console.WriteLine("\nInvalid Input! Please insert proper marks (\"Pass\" or \"Fail\")!\n");
+                    }
+                }
+            }
+            return studMarks;
+        }
+        private string checkResult(Dictionary<string, char> studMarks)
+        {
+            string studResults;
+            foreach (var mark in studMarks.Values)
             {
                 if (mark == 'F')
                 {
-                    result = "Fail";
-                    return result;
+                    studResults = "Fail";
+                    return studResults;
                 }
             }
-            result = "Pass";
-            return result;
+            studResults = "Pass";
+            return studResults;
         }
-        public override void getStudentInfo(string studGrade, List<string> subjects)
+        public override void displayStudent()
         {
-            //name
-            string phrase = @"^[a-zA-Z ]+$";
-            Console.Write("Enter Student's Name: ");
-            string studentName = Console.ReadLine();
-            bool nameValid = Regex.IsMatch(studentName, phrase);
-
-            while (!nameValid)
+            base.displayStudent();
+            foreach (var subject in marks)
             {
-                Console.WriteLine("\nInvalid Input! Please insert a proper name!\n");
-                Console.Write("Enter Student's Name: ");
-                studentName = Console.ReadLine();
-                nameValid = Regex.IsMatch(studentName, phrase);
+                Console.WriteLine($"Student Marks for {subject.Key}: {subject.Value}");
             }
-
-            //birthday
-            (DateTime bday, int stuage) = askBirthday();
-
-            //marks
-            Dictionary<string, char> studentMarks = new Dictionary<string, char>();
-            for (int i = 0; i < subjects.Count; i++)
-            {
-                Console.Write($"Insert marks for {subjects[i]}(A, B, C, D, F): ");
-                char sMarks = Convert.ToChar(Console.ReadLine());
-                while (sMarks != 'A' || sMarks != 'B' || sMarks != 'C' || sMarks != 'D' || sMarks != 'F')
-                {
-                    Console.WriteLine("\nInvalid Input! Please insert proper marks (0 to 100)!\n");
-                    Console.Write($"Please Insert the marks of {subjects[i]}: ");
-                    sMarks = Convert.ToChar(Console.ReadLine());
-                }
-                studentMarks.Add(subjects[i], sMarks);
-            }
-            CreateStudent(studentName, bday, stuage, studGrade, studentMarks);
-        }
-        public override void viewStudents(List<Student> sDetails, string studentGradeFilter)
-        {
-            List<Student> filteredStudents = new List<Student>();
-
-            foreach (Student student in sDetails)
-            {
-                if (student.grade == studentGradeFilter)
-                {
-                    filteredStudents.Add(student);
-                }
-            }
-            Console.WriteLine();
-            Console.Write(string.Format("{0,-20} {1,-12} {2,-5} {3,-7}", "Name", "Birthday", "Age", "Grade"));
-            foreach (var subject in filteredStudents[0].marks.Keys)
-            {
-                Console.Write($"{subject,-16}");
-            }
-            Console.WriteLine(string.Format("{0,-8} {1,-14}", "Results", "Distinctions"));
-            if (filteredStudents.Count > 0)
-            {
-                foreach (Student student in filteredStudents)
-                {
-                    Console.Write($"{student.Name,-20} {student.Birthday.ToShortDateString(),-12} {student.age,-5} {student.grade,-7}");
-                    Console.WriteLine($"{student.result,-8} {student.distinctions,-14}");
-                }
-            }
-            else
-            {
-                Console.WriteLine("There is no registered students in this grade!");
-            }
+            Console.WriteLine($"Student Results: {result}");
         }
     }
+
+    //HIGH SCHOOL STUDENTS
     public class HighSchool : Student
     {
-        public virtual void viewStudents(List<Student> sDetails, string studentGradeFilter)
-        {
-            List<Student> filteredStudents = new List<Student>();
+        public Dictionary<string, double> marks { get; private set; }
+        public double totalMarks { get; private set; }
+        public int distinctions { get; private set; }
 
-            foreach (Student student in sDetails)
+        public HighSchool() : base()
+        {
+            marks = new Dictionary<string, double>();
+            result = string.Empty;
+            totalMarks = 0;
+            distinctions = 0;
+        }
+        public HighSchool insertStudent(Dictionary<string, List<string>> gradeSubjects)
+        {
+            bool validGrade = false;
+            HighSchool hStudent = new HighSchool();
+            while (!validGrade)
             {
-                if (student.grade == studentGradeFilter)
+                Console.WriteLine("\nPlease choose High School Student's Grade: \n1.Grade 9 (Science)\n2.Grade 9 (Arts)\n3.Grade 10 (Science)\n4.Grade 10 (Arts)");
+                int grade = Convert.ToInt32(Console.ReadLine());
+                switch (grade)
                 {
-                    filteredStudents.Add(student);
+                    case 1:
+                        validGrade = true;
+                        hStudent.getStudentInfo("9S", gradeSubjects["9S"]);
+                        break;
+                    case 2:
+
+                        validGrade = true;
+                        hStudent.getStudentInfo("9A", gradeSubjects["9A"]);
+                        break;
+                    case 3:
+
+                        validGrade = true;
+                        hStudent.getStudentInfo("10S", gradeSubjects["10S"]);
+                        break;
+                    case 4:
+
+                        validGrade = true;
+                        hStudent.getStudentInfo("10A", gradeSubjects["10A"]);
+                        break;
+                    default:
+                        Console.WriteLine("\nInvalid Input!\n");
+                        break;
                 }
             }
-            Console.WriteLine();
-            Console.Write(string.Format("{0,-20} {1,-12} {2,-5} {3,-7}", "Name", "Birthday", "Age", "Grade"));
-            foreach (var subject in filteredStudents[0].marks.Keys)
+            return hStudent;
+        }
+        protected override void getStudentInfo(string studGrade, List<string> subjects)
+        {
+            base.getStudentInfo(studGrade, subjects);
+            marks = askMarks(studGrade, subjects);
+            result = checkResult(marks);
+            totalMarks = calculateTotalMarks(marks);
+            distinctions = countDistinctions(marks);
+
+        }
+        private Dictionary<string, double> askMarks(string studGrade, List<string> subjects)
+        {
+            Dictionary<string, double> studMarks = new Dictionary<string, double>();
+            for (int i = 0; i < subjects.Count; i++)
             {
-                Console.Write($"{subject,-16}");
-            }
-            Console.WriteLine(string.Format("{0,-12} {1,-8} {2,-14}", "Total Marks", "Results", "Distinctions"));
-            if (filteredStudents.Count > 0)
-            {
-                foreach (Student student in filteredStudents)
+                bool validMarks = false;
+                double sMarks;
+                while (!validMarks)
                 {
-                    Console.Write($"{student.Name,-20} {student.Birthday.ToShortDateString(),-12} {student.age,-5} {student.grade,-7}");
-                    foreach (double mark in student.marks.Values)
+                    Console.Write($"Insert marks for {subjects[i]}(0 - 100): ");
+                    sMarks = Convert.ToDouble(Console.ReadLine());
+                    if (sMarks >= 0 || sMarks <= 100)
                     {
-                        Console.Write($"{mark,-16}");
+                        validMarks = true;
+                        studMarks.Add(subjects[i], sMarks);
                     }
-                    Console.WriteLine($"{student.totalMarks,-12} {student.result,-8} {student.distinctions,-14}");
+                    else
+                    {
+                        Console.WriteLine("\nInvalid Input! Please insert proper marks (0 - 100)!\n");
+                    }
                 }
             }
-            else
+            return studMarks;
+        }
+        private string checkResult(Dictionary<string, double> studMarks)
+        {
+            string studResults;
+            foreach (var mark in studMarks.Values)
             {
-                Console.WriteLine("There is no registered students in this grade!");
+                if (mark < 40)
+                {
+                    studResults = "Fail";
+                    return studResults;
+                }
             }
+            studResults = "Pass";
+            return studResults;
+        }
+        private double calculateTotalMarks(Dictionary<string, double> studMarks)
+        {
+            double studTotalMarks = studMarks.Values.Sum();
+            return studTotalMarks;
+        }
+        private int countDistinctions(Dictionary<string, double> studMarks)
+        {
+            int studDistinctions = 0;
+            foreach (var mark in studMarks.Values)
+            {
+                if (mark < 40)
+                {
+                    studDistinctions = 0;
+                    break;
+                }
+                else if (mark < 80)
+                {
+                    studDistinctions++;
+                }
+            }
+            return studDistinctions;
+        }
+        public override void displayStudent()
+        {
+            base.displayStudent();
+            foreach (var subject in marks)
+            {
+                Console.WriteLine($"Student Marks for {subject.Key}: {subject.Value}");
+            }
+            Console.WriteLine($"Student Results: {result}");
+            Console.WriteLine($"Student Total Marks: {totalMarks}");
+            Console.WriteLine($"Student Distinctions: {distinctions}");
         }
     }
 }
