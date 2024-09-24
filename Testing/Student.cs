@@ -42,9 +42,11 @@ namespace Testing
                 if (checkName == false)
                 {
                     Console.WriteLine("\nInvalid Input! Please insert a proper name!\n");
-                    break;
                 }
-                isNameValid = true;
+                else
+                {
+                    isNameValid = true;
+                }
             }
             return studentName;
         }
@@ -255,8 +257,8 @@ namespace Testing
                 while (!isMarksValid)
                 {
                     Console.Write($"Insert marks for {subjects[i]}(\"A\", \"B\", \"C\", \"D\", \"F\"): ");
-                    sMarks = Convert.ToChar(Console.ReadLine());
-                    char.ToUpper(sMarks);
+                    char insertMarks = Convert.ToChar(Console.ReadLine());
+                    sMarks = char.ToUpper(insertMarks);
                     if (sMarks == 'A' || sMarks == 'B' || sMarks == 'C' || sMarks == 'D' || sMarks == 'F')
                     {
                         isMarksValid = true;
@@ -264,7 +266,7 @@ namespace Testing
                     }
                     else
                     {
-                        Console.WriteLine("\nInvalid Input! Please insert proper marks (\"Pass\" or \"Fail\")!\n");
+                        Console.WriteLine("\nInvalid Input! Please insert proper marks (\"A\", \"B\", \"C\", \"D\", \"F\")!\n");
                     }
                 }
             }

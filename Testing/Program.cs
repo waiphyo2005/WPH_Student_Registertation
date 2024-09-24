@@ -75,8 +75,7 @@ namespace Testing
                         Console.WriteLine("| View Registered Students |");
                         Console.WriteLine(" ==========================");
                         Console.WriteLine();
-                        Student s = new Student();
-                        foreach (var student in StudentDetails)
+                        foreach (Student student in StudentDetails)
                         {
                             student.DisplayStudent();
                             Console.WriteLine();
