@@ -47,6 +47,9 @@ namespace Testing
                             {
                                 case 1:
                                     isValidChoice = true;
+                                    //static
+                                    //file spilt
+                                    //OOP When to use and Not use
                                     ElementarySchool elementaryStudent = new ElementarySchool();
                                     StudentDetails.Add(elementaryStudent.InsertStudent(StudentGrading.gradeSubjects));
                                     Console.WriteLine("\nStudent Registered Successfully.");
