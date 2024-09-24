@@ -48,22 +48,19 @@ namespace Testing
                                 case 1:
                                     isValidChoice = true;
                                     ElementarySchool elementaryStudent = new ElementarySchool();
-                                    elementaryStudent = elementaryStudent.InsertStudent(StudentGrading.gradeSubjects);
-                                    StudentDetails.Add(elementaryStudent);
+                                    StudentDetails.Add(elementaryStudent.InsertStudent(StudentGrading.gradeSubjects));
                                     Console.WriteLine("\nStudent Registered Successfully.");
                                     break;
                                 case 2:
                                     isValidChoice = true;
                                     MiddleSchool middleStudent = new MiddleSchool();
-                                    middleStudent = middleStudent.InsertStudent(StudentGrading.gradeSubjects);
-                                    StudentDetails.Add(middleStudent);
+                                    StudentDetails.Add(middleStudent.InsertStudent(StudentGrading.gradeSubjects));
                                     Console.WriteLine("\nStudent Registered Successfully.");
                                     break;
                                 case 3:
                                     isValidChoice = true;
                                     HighSchool highStudent = new HighSchool();
-                                    highStudent = highStudent.InsertStudent(StudentGrading.gradeSubjects);
-                                    StudentDetails.Add(highStudent);
+                                    StudentDetails.Add(highStudent.InsertStudent(StudentGrading.gradeSubjects));
                                     Console.WriteLine("\nStudent Registered Successfully.");
                                     break;
                                 default:
