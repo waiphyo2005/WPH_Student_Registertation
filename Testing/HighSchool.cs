@@ -67,7 +67,7 @@ namespace Testing
                 {
                     Console.Write($"Insert marks for {subjects[i]}(0 - 100): ");
                     sMarks = Convert.ToDouble(Console.ReadLine());
-                    if (sMarks >= 0 || sMarks <= 100)
+                    if (sMarks >= 0 && sMarks <= 100)
                     {
                         isMarksValid = true;
                         studMarks.Add(subjects[i], sMarks);
