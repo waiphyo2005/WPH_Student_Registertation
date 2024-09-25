@@ -50,20 +50,20 @@ namespace Testing
                                     //static
                                     //file spilt
                                     //OOP When to use and Not use
-                                    ElementarySchool elementaryStudent = new ElementarySchool();
-                                    StudentDetails.Add(elementaryStudent.InsertStudent(StudentGrading.gradeSubjects));
+                                    //ElementarySchool elementaryStudent = new ElementarySchool();
+                                    StudentDetails.Add(ElementarySchool.InsertStudent(StudentGrading.gradeSubjects));
                                     Console.WriteLine("\nStudent Registered Successfully.");
                                     break;
                                 case 2:
                                     isValidChoice = true;
-                                    MiddleSchool middleStudent = new MiddleSchool();
-                                    StudentDetails.Add(middleStudent.InsertStudent(StudentGrading.gradeSubjects));
+                                    //MiddleSchool middleStudent = new MiddleSchool();
+                                    StudentDetails.Add(MiddleSchool.InsertStudent(StudentGrading.gradeSubjects));
                                     Console.WriteLine("\nStudent Registered Successfully.");
                                     break;
                                 case 3:
                                     isValidChoice = true;
-                                    HighSchool highStudent = new HighSchool();
-                                    StudentDetails.Add(highStudent.InsertStudent(StudentGrading.gradeSubjects));
+                                    //HighSchool highStudent = new HighSchool();
+                                    StudentDetails.Add(HighSchool.InsertStudent(StudentGrading.gradeSubjects));
                                     Console.WriteLine("\nStudent Registered Successfully.");
                                     break;
                                 default:

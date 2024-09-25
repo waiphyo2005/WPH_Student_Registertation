@@ -9,7 +9,7 @@ namespace Testing
     public class ElementarySchool : Student
     {
         public Dictionary<string, string> Marks { get; private set; }
-        public ElementarySchool InsertStudent(Dictionary<string, List<string>> gradeSubjects)
+        public static ElementarySchool InsertStudent(Dictionary<string, List<string>> gradeSubjects)
         {
             bool isGradeValid = false;
             ElementarySchool eStudent = new ElementarySchool();

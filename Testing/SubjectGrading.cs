@@ -23,10 +23,10 @@ namespace Testing
             gradeSubjects.Add("6", new List<string> { "Myanmar", "English", "Maths", "Science", "Geography", "History" });
             gradeSubjects.Add("7", new List<string> { "Myanmar", "English", "Maths", "Science", "Geography", "History" });
             gradeSubjects.Add("8", new List<string> { "Myanmar", "English", "Maths", "Science", "Geography", "History" });
-            gradeSubjects.Add("9B", new List<string> { "Myanmar", "English", "Maths", "Physics", "Chemistry", "Biology" });
-            gradeSubjects.Add("9E", new List<string> { "Myanmar", "English", "Maths", "Geography", "History", "Economics" });
-            gradeSubjects.Add("10B", new List<string> { "Myanmar", "English", "Maths", "Physics", "Chemistry", "Biology" });
-            gradeSubjects.Add("10E", new List<string> { "Myanmar", "English", "Maths", "Geography", "History", "Economics" });
+            gradeSubjects.Add("9S", new List<string> { "Myanmar", "English", "Maths", "Physics", "Chemistry", "Biology" });
+            gradeSubjects.Add("9A", new List<string> { "Myanmar", "English", "Maths", "Geography", "History", "Economics" });
+            gradeSubjects.Add("10S", new List<string> { "Myanmar", "English", "Maths", "Physics", "Chemistry", "Biology" });
+            gradeSubjects.Add("10A", new List<string> { "Myanmar", "English", "Maths", "Geography", "History", "Economics" });
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Testing
         public Dictionary<string, double> Marks { get; private set; }
         public double TotalMarks { get; private set; }
         public int Distinctions { get; private set; }
-        public HighSchool InsertStudent(Dictionary<string, List<string>> gradeSubjects)
+        public static HighSchool InsertStudent(Dictionary<string, List<string>> gradeSubjects)
         {
             bool validGrade = false;
             HighSchool hStudent = new HighSchool();
