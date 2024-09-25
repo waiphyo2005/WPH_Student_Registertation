@@ -15,31 +15,38 @@ namespace Testing
             MiddleSchool mStudent = new MiddleSchool();
             while (!isGradeValid)
             {
-                Console.WriteLine("\nPlease choose Middle School Student's Grade:\n1.Grade 5\n2.Grade 6\n3.Grade 7\n4.Grade 8");
-                int grade = Convert.ToInt32(Console.ReadLine());
-                switch (grade)
+                try
                 {
-                    case 1:
-                        isGradeValid = true;
-                        mStudent.GetStudentInfo("5", gradeSubjects["5"]);
-                        break;
-                    case 2:
+                    Console.WriteLine("\nPlease choose Middle School Student's Grade:\n1.Grade 5\n2.Grade 6\n3.Grade 7\n4.Grade 8");
+                    int grade = Convert.ToInt32(Console.ReadLine());
+                    switch (grade)
+                    {
+                        case 1:
+                            isGradeValid = true;
+                            mStudent.GetStudentInfo("5", gradeSubjects["5"]);
+                            break;
+                        case 2:
 
-                        isGradeValid = true;
-                        mStudent.GetStudentInfo("6", gradeSubjects["6"]);
-                        break;
-                    case 3:
-                        isGradeValid = true;
-                        mStudent.GetStudentInfo("7", gradeSubjects["7"]);
-                        break;
-                    case 4:
+                            isGradeValid = true;
+                            mStudent.GetStudentInfo("6", gradeSubjects["6"]);
+                            break;
+                        case 3:
+                            isGradeValid = true;
+                            mStudent.GetStudentInfo("7", gradeSubjects["7"]);
+                            break;
+                        case 4:
 
-                        isGradeValid = true;
-                        mStudent.GetStudentInfo("8", gradeSubjects["8"]);
-                        break;
-                    default:
-                        Console.WriteLine("\nInvalid Input!\n");
-                        break;
+                            isGradeValid = true;
+                            mStudent.GetStudentInfo("8", gradeSubjects["8"]);
+                            break;
+                        default:
+                            Console.WriteLine("\nInvalid Input!\n");
+                            break;
+                    }
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("\nInvalid Input!\n");
                 }
             }
             return mStudent;
@@ -59,15 +66,22 @@ namespace Testing
                 char sMarks;
                 while (!isMarksValid)
                 {
-                    Console.Write($"Insert marks for {subjects[i]}(\"A\", \"B\", \"C\", \"D\", \"F\"): ");
-                    char insertMarks = Convert.ToChar(Console.ReadLine());
-                    sMarks = char.ToUpper(insertMarks);
-                    if (sMarks == 'A' || sMarks == 'B' || sMarks == 'C' || sMarks == 'D' || sMarks == 'F')
+                    try
                     {
-                        isMarksValid = true;
-                        studMarks.Add(subjects[i], sMarks);
+                        Console.Write($"Insert marks for {subjects[i]}(\"A\", \"B\", \"C\", \"D\", \"F\"): ");
+                        char insertMarks = Convert.ToChar(Console.ReadLine());
+                        sMarks = char.ToUpper(insertMarks);
+                        if (sMarks == 'A' || sMarks == 'B' || sMarks == 'C' || sMarks == 'D' || sMarks == 'F')
+                        {
+                            isMarksValid = true;
+                            studMarks.Add(subjects[i], sMarks);
+                        }
+                        else
+                        {
+                            Console.WriteLine("\nInvalid Input! Please insert proper marks (\"A\", \"B\", \"C\", \"D\", \"F\")!\n");
+                        }
                     }
-                    else
+                    catch (FormatException)
                     {
                         Console.WriteLine("\nInvalid Input! Please insert proper marks (\"A\", \"B\", \"C\", \"D\", \"F\")!\n");
                     }

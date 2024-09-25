@@ -15,32 +15,39 @@ namespace Testing
             ElementarySchool eStudent = new ElementarySchool();
             while (!isGradeValid)
             {
-                Console.WriteLine("\nPlease choose Elementary School Student's Grade:\n1.Grade 1\n2.Grade 2\n3.Grade 3\n4.Grade 4");
-                int grade = Convert.ToInt32(Console.ReadLine());
-                switch (grade)
+                try
                 {
-                    case 1:
-                        isGradeValid = true;
-                        eStudent.GetStudentInfo("1", gradeSubjects["1"]);
-                        break;
-                    case 2:
+                    Console.WriteLine("\nPlease choose Elementary School Student's Grade:\n1.Grade 1\n2.Grade 2\n3.Grade 3\n4.Grade 4");
+                    int grade = Convert.ToInt32(Console.ReadLine());
+                    switch (grade)
+                    {
+                        case 1:
+                            isGradeValid = true;
+                            eStudent.GetStudentInfo("1", gradeSubjects["1"]);
+                            break;
+                        case 2:
 
-                        isGradeValid = true;
-                        eStudent.GetStudentInfo("2", gradeSubjects["2"]);
-                        break;
-                    case 3:
+                            isGradeValid = true;
+                            eStudent.GetStudentInfo("2", gradeSubjects["2"]);
+                            break;
+                        case 3:
 
-                        isGradeValid = true;
-                        eStudent.GetStudentInfo("3", gradeSubjects["3"]);
-                        break;
-                    case 4:
+                            isGradeValid = true;
+                            eStudent.GetStudentInfo("3", gradeSubjects["3"]);
+                            break;
+                        case 4:
 
-                        isGradeValid = true;
-                        eStudent.GetStudentInfo("4", gradeSubjects["4"]);
-                        break;
-                    default:
-                        Console.WriteLine("\nInvalid Input!\n");
-                        break;
+                            isGradeValid = true;
+                            eStudent.GetStudentInfo("4", gradeSubjects["4"]);
+                            break;
+                        default:
+                            Console.WriteLine("\nInvalid Input!\n");
+                            break;
+                    }
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("\nInvalid Input!\n");
                 }
             }
             return eStudent;

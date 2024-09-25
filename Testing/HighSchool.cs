@@ -17,32 +17,39 @@ namespace Testing
             HighSchool hStudent = new HighSchool();
             while (!validGrade)
             {
-                Console.WriteLine("\nPlease choose High School Student's Grade: \n1.Grade 9 (Science)\n2.Grade 9 (Arts)\n3.Grade 10 (Science)\n4.Grade 10 (Arts)");
-                int grade = Convert.ToInt32(Console.ReadLine());
-                switch (grade)
+                try
                 {
-                    case 1:
-                        validGrade = true;
-                        hStudent.GetStudentInfo("9S", gradeSubjects["9S"]);
-                        break;
-                    case 2:
+                    Console.WriteLine("\nPlease choose High School Student's Grade: \n1.Grade 9 (Science)\n2.Grade 9 (Arts)\n3.Grade 10 (Science)\n4.Grade 10 (Arts)");
+                    int grade = Convert.ToInt32(Console.ReadLine());
+                    switch (grade)
+                    {
+                        case 1:
+                            validGrade = true;
+                            hStudent.GetStudentInfo("9S", gradeSubjects["9S"]);
+                            break;
+                        case 2:
 
-                        validGrade = true;
-                        hStudent.GetStudentInfo("9A", gradeSubjects["9A"]);
-                        break;
-                    case 3:
+                            validGrade = true;
+                            hStudent.GetStudentInfo("9A", gradeSubjects["9A"]);
+                            break;
+                        case 3:
 
-                        validGrade = true;
-                        hStudent.GetStudentInfo("10S", gradeSubjects["10S"]);
-                        break;
-                    case 4:
+                            validGrade = true;
+                            hStudent.GetStudentInfo("10S", gradeSubjects["10S"]);
+                            break;
+                        case 4:
 
-                        validGrade = true;
-                        hStudent.GetStudentInfo("10A", gradeSubjects["10A"]);
-                        break;
-                    default:
-                        Console.WriteLine("\nInvalid Input!\n");
-                        break;
+                            validGrade = true;
+                            hStudent.GetStudentInfo("10A", gradeSubjects["10A"]);
+                            break;
+                        default:
+                            Console.WriteLine("\nInvalid Input!\n");
+                            break;
+                    }
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("\nInvalid Input!\n");
                 }
             }
             return hStudent;
@@ -65,14 +72,21 @@ namespace Testing
                 double sMarks;
                 while (!isMarksValid)
                 {
-                    Console.Write($"Insert marks for {subjects[i]}(0 - 100): ");
-                    sMarks = Convert.ToDouble(Console.ReadLine());
-                    if (sMarks >= 0 && sMarks <= 100)
+                    try
                     {
-                        isMarksValid = true;
-                        studMarks.Add(subjects[i], sMarks);
+                        Console.Write($"Insert marks for {subjects[i]}(0 - 100): ");
+                        sMarks = Convert.ToDouble(Console.ReadLine());
+                        if (sMarks >= 0 && sMarks <= 100)
+                        {
+                            isMarksValid = true;
+                            studMarks.Add(subjects[i], sMarks);
+                        }
+                        else
+                        {
+                            Console.WriteLine("\nInvalid Input! Please insert proper marks (0 - 100)!\n");
+                        }
                     }
-                    else
+                    catch (FormatException)
                     {
                         Console.WriteLine("\nInvalid Input! Please insert proper marks (0 - 100)!\n");
                     }
