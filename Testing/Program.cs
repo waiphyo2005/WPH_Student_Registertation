@@ -29,6 +29,7 @@ namespace Testing
             {
                 try
                 {
+
                     int perform;
                     Console.WriteLine("\nPlease select option that you want to perform: \n1.Register Students\n2.View registered students\n3.Exit");
                     perform = Convert.ToInt32(Console.ReadLine());
