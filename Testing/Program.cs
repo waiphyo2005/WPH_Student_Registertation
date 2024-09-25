@@ -82,6 +82,10 @@ namespace Testing
                             Console.WriteLine("| View Registered Students |");
                             Console.WriteLine(" ==========================");
                             Console.WriteLine();
+                            if (StudentDetails.Count == 0)
+                            {
+                                Console.WriteLine("There is no registered students!");
+                            }
                             foreach (Student student in StudentDetails)
                             {
                                 student.DisplayStudent();
