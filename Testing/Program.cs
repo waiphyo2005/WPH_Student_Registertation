@@ -9,72 +9,102 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks.Dataflow;
 using System.Xml.Linq;
 
-namespace TEST
+namespace Testing
 {
     public class Program
     {
 
         static void Main(string[] args)
         {
-            //----declare list to store registered students----\\
-            List<Student> studentDetails = new List<Student>();
-
-            //----initialize data for grades and subjects-----\\
-            StudentGrading studentGrading = new StudentGrading();
-            studentGrading.SubjectGrading();
+            List<Student> StudentDetails = new List<Student>();
+            StudentGrading StudentGrading = new StudentGrading();
+            StudentGrading.SubjectGrading();
 
             Console.WriteLine("============================================");
             Console.WriteLine("|| Welcome to Student Registration System ||");
             Console.WriteLine("============================================");
             Console.WriteLine();
-            bool again = false;
-            while (!again)
+            bool isEnding = false;
+            while (!isEnding)
             {
-                int perform;
-                Console.WriteLine("\nPlease select option that you want to perform: \n1.Register Students\n2.View registered students\n3.Exit");
-                perform = Convert.ToInt32(Console.ReadLine());
-                switch (perform)
+                try
                 {
-                    case 1:
-                        Console.WriteLine();
-                        Console.WriteLine(" =======================");
-                        Console.WriteLine("| Register New Students |");
-                        Console.WriteLine(" =======================");
-                        Console.WriteLine();
-                        //----building student object----\\
-                        Student s = new Student();
 
-                        //----using return method to store student info inside student object return the object----\\
-                        //----gradeSuubjects Dictionary is set as perimeter to get the list of subjects according to grades----\\
-                        s = s.insertStudent(studentGrading.gradeSubjects);
+                    int perform;
+                    Console.WriteLine("\nPlease select option that you want to perform: \n1.Register Students\n2.View registered students\n3.Exit");
+                    perform = Convert.ToInt32(Console.ReadLine());
+                    switch (perform)
+                    {
+                        case 1:
+                            Console.WriteLine();
+                            Console.WriteLine(" =======================");
+                            Console.WriteLine("| Register New Students |");
+                            Console.WriteLine(" =======================");
+                            Console.WriteLine();
+                            bool isValidChoice = false;
+                            while (!isValidChoice)
+                            {
+                                try
+                                {
+                                    Console.WriteLine("\nPlease select the standard that you want to register:\n1.Elimentary School\n2.Middle School\n3.High School");
+                                    int choice = Convert.ToInt32(Console.ReadLine());
 
-                        //----inserting student object into registered students list----\\
-                        studentDetails.Add(s);
-                        Console.WriteLine("\nStudent Registered Successfully.");
-                        again = false;
-                        break;
-                    case 2:
-                        Console.WriteLine();
-                        Console.WriteLine(" ==========================");
-                        Console.WriteLine("| View Registered Students |");
-                        Console.WriteLine(" ==========================");
-                        Console.WriteLine();
-                        //----building student object to access displayStudent method----\\
-                        Student student = new Student();
-
-                        //----Calling displayStudent method to view registered students----\\
-                        //----Registered Student List is set as perimeter for the method from student class to access the list in Main----\\
-                        student.displayStudent(studentDetails);
-                        again = false;
-                        break;
-                    case 3:
-                        again = true;
-                        Console.WriteLine("Thank you for using the system!");
-                        break;
-                    default:
-                        Console.WriteLine("Invalid Input!");
-                        again = false;
-                        break;
+                                    switch (choice)
+                                    {
+                                        case 1:
+                                            isValidChoice = true;
+                                            StudentDetails.Add(ElementarySchool.InsertStudent(StudentGrading.gradeSubjects));
+                                            Console.WriteLine("\nStudent Registered Successfully.");
+                                            break;
+                                        case 2:
+                                            isValidChoice = true;
+                                            StudentDetails.Add(MiddleSchool.InsertStudent(StudentGrading.gradeSubjects));
+                                            Console.WriteLine("\nStudent Registered Successfully.");
+                                            break;
+                                        case 3:
+                                            isValidChoice = true;
+                                            StudentDetails.Add(HighSchool.InsertStudent(StudentGrading.gradeSubjects));
+                                            Console.WriteLine("\nStudent Registered Successfully.");
+                                            break;
+                                        default:
+                                            Console.WriteLine("Invalid Input!");
+                                            break;
+                                    }
+                                }
+                                catch (FormatException)
+                                {
+                                    Console.WriteLine("Invalid Input!");
+                                }
+                            }
+                            break;
+                        case 2:
+                            Console.WriteLine();
+                            Console.WriteLine(" ==========================");
+                            Console.WriteLine("| View Registered Students |");
+                            Console.WriteLine(" ==========================");
+                            Console.WriteLine();
+                            if (StudentDetails.Count == 0)
+                            {
+                                Console.WriteLine("There is no registered students!");
+                            }
+                            foreach (Student student in StudentDetails)
+                            {
+                                student.DisplayStudent();
+                                Console.WriteLine();
+                            }
+                            break;
+                        case 3:
+                            isEnding = true;
+                            Console.WriteLine("Thank you for using the system!");
+                            break;
+                        default:
+                            Console.WriteLine("Invalid Input!");
+                            break;
+                    }
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Invalid Input!");
                 }
             }
         }
